@@ -27,7 +27,7 @@ void gera_mapa(int seed)     //função para gerar o mapa
                 mapa[y][x]=wall_char;        //cria as bordas do mapa com uma espessura de duas paredes
 
             }else {
-                mapa[y][x] = rand() % 9 ? chao:wall_char;     //no resto do mapa os "#" são colocados de forma aleatória (é escolhido um número ao acaso, e caso ele seja divisível por 9 então coloca-se um chão) 
+                mapa[y][x] = rand() % 8 ? chao:wall_char;     //no resto do mapa os "#" são colocados de forma aleatória (é escolhido um número ao acaso, e caso ele seja divisível por 9 então coloca-se um chão) 
             }
         }
     }
