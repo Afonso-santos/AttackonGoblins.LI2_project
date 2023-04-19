@@ -1,146 +1,132 @@
-#include <curses.h>
 #include <ncurses.h>
 #include <stdlib.h>
 #include <time.h>
 
-#define ALTURA 40
-#define COMPRIMENTO 40
-#define wall_char '#'
-#define chao '.'
-#define player_char '@'
+#define ALTURA 35             //altura do mapa
+#define COMPRIMENTO 120       //comprimento do mapa
+#define wall_char '#'         //o caracter de uma parede é o "#"
+#define chao '.'              //o caracter para indicar que é chão é "."
+#define player_char '@'       //o caracter do jogador é o "@"
 
-typedef struct Jogador{
-
-    int x;
-    int y ;
-    int health;    
-    int attack;
-
-
+typedef struct Jogador{       //define-se uma struct Jogador com sinónimo "Player" e que é constituída por:
+    int x;                    //    -posição x do jogador (aumenta da esquerda para a direita)
+    int y ;                   //    -posição y do jogador (aumenta de cima para baixo)
+    int health;               //    -guarda a quantidade de vida
+    int attack;               //    -dano da arma
 }Player;
 
-char mapa[ALTURA][COMPRIMENTO];
+char mapa[ALTURA][COMPRIMENTO];     //define-se um mapa como sendo uma matriz
 
-
-void desenha_map(char mapa[ALTURA][COMPRIMENTO],Player player )
+void gera_mapa(int seed)     //função para gerar o mapa 
 {
-    clear();
-
-    for (int y=0; y<ALTURA; y++) {
-        for (int x=0;x<COMPRIMENTO; x++) {
-            if (y==player.y && x==player.x) {
-                printw("%c",player_char);
-
-            }else {
-                printw("%c",mapa[y][x]);
-            }
-        
-        }
-        printw("\n");
-    }   
-    refresh(); 
-}
-
-void gera_mapa(int seed)
-{
-    srand(seed);
+    srand(seed);     //gera números aleatóios com base no valor de seed para que o "rand" escolha um desses valores
     for (int y=0; y<ALTURA; y++) {
         for (int x=0;x<COMPRIMENTO ; x++) {
             
             if (x==0||y==0||x==1||y==1||x==COMPRIMENTO-1 || x==COMPRIMENTO-2 || y==ALTURA-1 ||y==ALTURA-2 ) {
-                mapa[y][x]=wall_char;
+                mapa[y][x]=wall_char;        //cria as bordas do mapa com uma espessura de duas paredes
 
             }else {
-                mapa[y][x] = rand() % 4 ? chao:wall_char;
-                
+                mapa[y][x] = rand() % 9 ? chao:wall_char;     //no resto do mapa os "#" são colocados de forma aleatória (é escolhido um número ao acaso, e caso ele seja divisível por 9 então coloca-se um chão) 
             }
         }
     }
 }
 
+void desenha_map(char mapa[ALTURA][COMPRIMENTO],Player player){      //faz-se uma função para desenhar o mapa inicial
+    clear();    //para apagar o mapa que estava anteriormente desenhado no ecrã
+    for (int y=0; y<ALTURA; y++) {
+        for (int x=0;x<COMPRIMENTO; x++) {
+            
+            if (y==player.y && x==player.x) {
+                printw("%c",player_char);          //assim que for atingida a posição inicial do jogador, é necessário colocar lá um "@"
+            
+            }else {
+                printw("%c",mapa[y][x]);          //se ainda não foi atingida a posição do jogador, então o mapa é imprimido normalmente (com "#" para as paredes e "." para o chão)
+            } 
 
+        }
+        printw("\n");
+    }   
+}
 
-void movimento(char mapa[ALTURA][COMPRIMENTO], Player player)
+void movimento(char mapa[ALTURA][COMPRIMENTO], Player player)      //função responsável por ir alterando as coordenadas do jogador consoante as teclas pressionadas
 {
-    while (1) {
+    while (1) {     //para não terminar
 
-    int ch = getch();
+    int ch = getch();       //guarda o caracter da tecla pressionada
 
-    switch(ch) {
-                case '8':
+    switch(ch) {    //em todos estes casos, para que o jogador se mova é necessário que este não vá contra uma parede
+                case '8':      //o jogador deslocar-se-á para cima
                     if (player.y > 0 && mapa[player.y-1][player.x] != wall_char) {
                         player.y--;
                     }
                     break;
-                case '2':
+                case '2':      //o jogador deslocar-se-á para baixo
                     if (player.y < ALTURA-1 && mapa[player.y+1][player.x] != wall_char) {
                         player.y++;
                     }
                     break;
-                case '4':
+                case '4':      //o jogador deslocar-se-á para a esquerda
                     if (player.x > 0 && mapa[player.y][player.x-1] != wall_char) {
                         player.x--;
                     }
                     break;
-                case '6':
+                case '6':      //o jogador deslocar-se-á para a direita
                     if (player.x < COMPRIMENTO-1 && mapa[player.y][player.x+1] != wall_char) {
                         player.x++;
                     }
                     break;
-                case '1':
+                case '1':      //o jogador deslocar-se-á na diagonal com sentido para baixo e para a esquerda
                     if (player.x < COMPRIMENTO-1 && mapa[player.y+1][player.x-1] != wall_char) {
                         player.x--;
                         player.y++;
                     }
                     break;
-                case '3':
+                case '3':      //o jogador deslocar-se-á na diagonal com sentido para baixo e para a direita
                     if (player.x < COMPRIMENTO-1 && mapa[player.y+1][player.x+1] != wall_char) {
                         player.x++;
                         player.y++;
                     }
                     break;
-                case '7':
+                case '7':      //o jogador deslocar-se-á na diagonal com sentido para cima e para a esquerda
                     if (player.x < COMPRIMENTO-1 && mapa[player.y-1][player.x-1] != wall_char) {
                         player.x--;
                         player.y--;
                     }
                     break;
-                case '9':
+                case '9':      //o jogador deslocar-se-á na diagonal com sentido para cima e para a direita
                     if (player.x < COMPRIMENTO-1 && mapa[player.y-1][player.x+1] != wall_char) {
                         player.x++;
                         player.y--;
                     }
                     break;
-                case 'q':
+                case 'q':       //encerra o jogo caso a tecla "q" seja pressionada
                     endwin();
                     exit(0);
-                    break;
-                default:
-                    break;
+                    break;      
             }
-            desenha_map(mapa,player);
+            desenha_map(mapa,player);    //volta-se a desenhar o mapa mas desta vez com o jogador na sua nova posição
 
     }
 }
 
+
+
+
 int main()
 {
-    Player player = {ALTURA/2, COMPRIMENTO/2 , 100, 15};
-    int seed=time(NULL);
-
-    gera_mapa(seed);
+    Player player = {COMPRIMENTO/2, ALTURA/2 , 100, 15};       //define quais serão as coordenadas iniciais do jogador e qual a sua vida e o dano da arma
+    int seed=time(NULL);    //declara uma variável "seed" que varia de cada vez que o jogo é iniciado
+    gera_mapa(seed);         //gera um mapa aleatório 
 //---------------------------------------
-    initscr();
-    cbreak();
-    noecho();
-    keypad(stdscr, TRUE);
+    initscr();                                //
+    cbreak();                                 //    para inicializar o ncurses
+    noecho();                                 //
+    keypad(stdscr, TRUE);                     //
 //----------------------------------------
-    desenha_map(mapa,player);
-    movimento(mapa,player);
-
-
-
+    desenha_map(mapa,player);     //vai ser responsável por ir alterando a posição do jogador no ecrã 
+    movimento(mapa,player);      //chama a função responsável por ir alterando as coordenadas do jogador consoante a tecla pressionada
     endwin();
-
     return 0;
 }
