@@ -12,3 +12,9 @@ a.out
 *.o
 *.exe
 
+# Ignore cache files
+jogo.dSYM
+objetos
+
+# Ignore executables
+jogo
