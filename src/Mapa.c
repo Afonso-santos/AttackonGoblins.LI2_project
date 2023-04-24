@@ -1,3 +1,4 @@
+#include "../includes/types/position.h"
 #include <ncurses.h>
 #include <stdlib.h>
 #include <time.h>
@@ -114,19 +115,8 @@ void movimento(char mapa[ALTURA][COMPRIMENTO], Player player)      //função re
 
 
 
-int main()
+int main(void)
 {
-    Player player = {COMPRIMENTO/2, ALTURA/2 , 100, 15};       //define quais serão as coordenadas iniciais do jogador e qual a sua vida e o dano da arma
-    int seed=time(NULL);    //declara uma variável "seed" que varia de cada vez que o jogo é iniciado
-    gera_mapa(seed);         //gera um mapa aleatório 
-//---------------------------------------
-    initscr();                                //
-    cbreak();                                 //    para inicializar o ncurses
-    noecho();                                 //
-    keypad(stdscr, TRUE);                     //
-//----------------------------------------
-    desenha_map(mapa,player);     //vai ser responsável por ir alterando a posição do jogador no ecrã 
-    movimento(mapa,player);      //chama a função responsável por ir alterando as coordenadas do jogador consoante a tecla pressionada
-    endwin();
-    return 0;
+    Position position = create_position(0,0);
+    printf("%s\n", position_to_string(position_get_left(position)).data);
 }

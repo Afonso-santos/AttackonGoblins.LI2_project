@@ -1,30 +1,20 @@
-#CFLAGS=-Wall -Wextra -pedantic -O2
-#LIBS=-lm -lcurses
-#
-#jogo: Mapa.o
-#	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
-#
-#clean:
-#	rm jogo *.o
+CC := gcc
 
-$(CC) = gcc
-PNTC=$(wildcard src/* .c)
-PNTH=$(wildcard Include/* .h)
-FLAGS= -IInclude -Wall -Wextra -pedantic -O2
-DIREC:=objetos/
-PNTO=$(PNTC:src/%.c=$(DIREC)%.o)
+CFLAGS := -IInclude -Wall -Wextra -pedantic -O2 -g
+LIBS := -lncurses
+	
+SRCS := $(shell find . -name '*.c')
+OBJS := $(SRCS:%.c=%.o)
 
-run: $(PNTO)
-	$(CC) $(PNTC) $(FLAGS) -lncurses -g -o jogo -lncurses -lm
+EXEC := jogo
 
-compile: run
-	./jogo
+.PHONY: all clean
 
-objetos:
-	mkdir -p $@
-
-$(DIREC)%.o: src/%.c | objetos
-	$(CC) $(FLAGS) -o "$@" -c "$<"  
-
+all: $(EXEC)
+	
 clean:
-	rm -rf $(DIREC) jogo *.o
+	find . -name '*.o' -exec rm -f {} \;
+	rm -f $(EXEC)
+
+$(EXEC): $(OBJS)
+	$(CC) $^ $(LIBS) -o $@

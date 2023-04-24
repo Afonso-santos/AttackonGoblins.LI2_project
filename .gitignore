@@ -12,6 +12,9 @@ a.out
 *.o
 *.exe
 
+# Ignore .vscode settings files
+.vscode
+
 # Ignore cache files
 jogo.dSYM
 objetos
