@@ -205,25 +205,18 @@ int main() {
         if (j == 2) {
             for (int k=0; k<(COLS-77)/2; k++) printw(" ");
             printw(" _____      _____     _____            _____          _______  _______  _____\n");
-            //for (int k=(COLS-77)/2 +77; k<COLS; k++) printw(" ");
             for (int k=0; k<(COLS-77)/2; k++) printw(" ");
             printw("|     |    /     \\   /     \\ |      | |       |          |        |    |\n");
-            //for (int k=(COLS-77)/2 +72; k<COLS; k++) printw(" ");
             for (int k=0; k<(COLS-77)/2; k++) printw(" ");
             printw("|     |   |       | |        |      | |       |          |        |    |\n");
-            //for (int k=(COLS-77)/2 +72; k<COLS; k++) printw(" ");
             for (int k=0; k<(COLS-77)/2; k++) printw(" ");
             printw("|_____|   |       | |   ___  |      | |_____  |          |        |    |_____\n");
-            //for (int k=(COLS-77)/2 +77; k<COLS; k++) printw(" ");
             for (int k=0; k<(COLS-77)/2; k++) printw(" ");
             printw("|     \\   |       | |  |_  | |      | |       |          |        |    |\n");
-            //for (int k=(COLS-77)/2 +72; k<COLS; k++) printw(" ");
             for (int k=0; k<(COLS-77)/2; k++) printw(" ");
             printw("|      \\  |       | |      | |      | |       |          |        |    |\n");
-            //for (int k=(COLS-77)/2 +72; k<COLS; k++) printw(" ");
             for (int k=0; k<(COLS-77)/2; k++) printw(" ");
             printw("|       \\  \\_____/   \\_____| |______| |_____  |_____  ___|___     |    |_____\n");
-            //for (int k=(COLS-77)/2 +77; k<COLS; k++) printw(" ");
             attroff(COLOR_PAIR(COR_TEXTO2));
         }
         else {
