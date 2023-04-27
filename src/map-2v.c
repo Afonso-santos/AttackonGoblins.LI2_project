@@ -5,12 +5,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define ALTURA  35
-#define COMPRIMENTO 150
+#define ALTURA  49
+#define COMPRIMENTO 180
 
 
-#define wall '|'
-#define floor '_'
+#define wall '#'
+#define floor '#'
 #define boox '='
 #define empty ' '
 #define parede '.'
@@ -111,7 +111,7 @@ void gera_wall()
 {
     srand(time(0));
 
-    int num_paredes = rand() % 6+ 15; 
+    int num_paredes = rand() % 6 + 35; 
 
     for (int i = 0; i < num_paredes; i++) {
         int shape = rand() % 3; // Gere um tipo de forma aleatório (0 a 2)
@@ -163,7 +163,7 @@ void gera_mapa()
 
             }else if (i==0||i==ALTURA-1) {
 
-                mapa[j][i]= floor;
+                mapa[j][i] = floor;
             }else{
                 mapa[j][i]=empty;
             }   
