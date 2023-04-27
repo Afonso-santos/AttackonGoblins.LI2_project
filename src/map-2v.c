@@ -49,7 +49,7 @@ void gera_Square(int tamanho,Position pos)
     for (int i=0; i<tamanho; i++) {
         for (int j=0;j<tamanho ; j++) {
             
-            if (mapa[pos.x+j][pos.y+i]!=floor && mapa[pos.x+j][pos.y+i]!=floor) {
+            if (mapa[pos.x+j][pos.y+i]!=wall && mapa[pos.x+j][pos.y+i]!=floor) {
                 
                 mapa[pos.x + j][pos.y + i] = parede;
             }
@@ -163,7 +163,7 @@ void gera_mapa()
 
             }else if (i==0||i==ALTURA-1) {
 
-                mapa[j][i]= wall;
+                mapa[j][i]= floor;
             }else{
                 mapa[j][i]=empty;
             }   
