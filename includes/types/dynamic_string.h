@@ -6,7 +6,7 @@ typedef struct _String {
     size_t allocated_length;
 } String;
 
-String create_string(const char *data);
-void free_string(String string);
+String *create_string(const char *data);
+void free_string(String *string);
 
-void string_append(String string, const char *data);
+void string_append(String *string, const char *data);
