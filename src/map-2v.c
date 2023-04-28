@@ -303,9 +303,7 @@ void libera_mapa() {
 
 
 int main(){  
-    player player ;
-    player.pos.x= 80;
-    player.pos.y= 20 ;
+    player player = {player.pos.x= 80, player.pos.y= 20};
     initscr(); // Inicializa a biblioteca ncurses
     define();
     gera_mapa();
