@@ -29,7 +29,7 @@ void define() {
 #define ALTURA (max_y-7)
 #define COMPRIMENTO (max_x-58)
     
-
+#define player_char '@'
 #define wall '#'
 #define floor '#'
 #define boox '='
@@ -46,6 +46,13 @@ typedef struct Position {
     int x;
     int y;
 } Position;
+
+typedef struct Player{
+    Position pos ;
+    //int health;    
+    //int attack;
+}player;
+
 
 int check(int x, int y) {
     if (x < 2 || x >= COMPRIMENTO - 2|| y < 2 || y >= ALTURA - 2) {
@@ -184,13 +191,11 @@ void gera_barril()
     }
 }
 
-
-
 void gera_mapa()
 {
     for (int i =0; i<ALTURA; i++) {
         for (int j =0;j<COMPRIMENTO; j++) {
-            if (j==0 ||j==COMPRIMENTO-1 ) {
+            if (j==0 ||j==COMPRIMENTO-1) {
 
                 mapa[j][i]=wall;
 
@@ -207,18 +212,83 @@ void gera_mapa()
 
 }
 
-void print_map()
+void print_map(player player)
 {   
     clear();
     for (int i=0; i<ALTURA; i++) {
-        for (int j=0; j<COMPRIMENTO; j++) {
-            
-            mvprintw(i,j,"%c",mapa[j][i]);
+        for (int j=0; j<COMPRIMENTO; j++) {  
+            if (i==player.pos.y && j==player.pos.x){
 
+                mvprintw(i,j,"%c", player_char);               
+            }else {          
+                mvprintw(i,j,"%c",mapa[j][i]);
+            }
         }
     }
-    //refresh();
 }
+
+
+void move_player(player player){
+    while(1){
+        int direction = getch();
+        switch (direction) {
+            case '8':  // Cima
+                if (mapa[player.pos.x][player.pos.y-1] == empty) {
+                    player.pos.y--;
+                }
+                break;
+            case '2':  // Baixo
+                if (mapa[player.pos.x][player.pos.y+1] == empty) {
+                    player.pos.y++;
+                }
+                break;
+            case '4':  // Esquerda
+                if (mapa[player.pos.x-1][player.pos.y] == empty) {
+                    player.pos.x--;
+                }
+                break;
+            case '6':  // Direita
+                if (mapa[player.pos.x+1][player.pos.y] == empty) {
+                    player.pos.x++;
+                }
+                break;
+            case '7':  // Diagonal superior esquerda
+                if (mapa[player.pos.x-1][player.pos.y-1] == empty) {
+                    player.pos.x--;
+                    player.pos.y--;
+                }
+                break;
+            case '9':  // Diagonal superior direita
+                if (mapa[player.pos.x+1][player.pos.y-1] == empty) {
+                    player.pos.x++;
+                    player.pos.y--;
+                }
+                break;
+            case '1':  // Diagonal inferior esquerda
+                if (mapa[player.pos.x-1][player.pos.y+1] == empty) {
+                    player.pos.x--;
+                    player.pos.y++;
+                }
+                break;
+            case '3':  // Diagonal inferior direita
+                if (mapa[player.pos.x+1][player.pos.y+1] == empty) {
+                    player.pos.x++;
+                    player.pos.y++;
+                }
+                break;
+            case 'q':
+                endwin();
+                exit(0);
+                break;
+        }
+        
+        print_map(player);
+    }
+}
+
+
+
+
 
 void libera_mapa() {
     // Libera memória alocada para o mapa
@@ -231,14 +301,20 @@ void libera_mapa() {
 
 
 
-int main(){   
+
+int main(){  
+    player player ;
+    player.pos.x= 80;
+    player.pos.y= 20 ;
     initscr(); // Inicializa a biblioteca ncurses
     define();
     gera_mapa();
     gera_wall();
     gera_barril();
 
-    print_map();
+    print_map(player);
+    move_player(player);
+
     
     getch(); // Aguarda pressionar uma tecla para sair
     
@@ -248,8 +324,3 @@ int main(){
     
     return 0;
 }
-
-
-
-
-
