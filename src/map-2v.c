@@ -1,3 +1,4 @@
+#include <alloca.h>
 #include <curses.h>
 #include <math.h>
 #include <ncurses.h>
@@ -64,6 +65,19 @@ int check(int x, int y) {
         return 0;
     }
 }
+
+
+int check_player(int x, int y) {
+    if (x <= 2 || x >= COMPRIMENTO - 2|| y <= 2 || y >= ALTURA - 2) {
+        return 0;
+    }
+    if (mapa[x][y] == empty && x>2 && x<COMPRIMENTO-2 && y>2 && y<ALTURA-2) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 
 
 
@@ -232,22 +246,22 @@ void move_player(player player){
     while(1){
         int direction = getch();
         switch (direction) {
-            case '8':  // Cima
+            case 'w':  // Cima
                 if (mapa[player.pos.x][player.pos.y-1] == empty) {
                     player.pos.y--;
                 }
                 break;
-            case '2':  // Baixo
+            case 's':  // Baixo
                 if (mapa[player.pos.x][player.pos.y+1] == empty) {
                     player.pos.y++;
                 }
                 break;
-            case '4':  // Esquerda
+            case 'a':  // Esquerda
                 if (mapa[player.pos.x-1][player.pos.y] == empty) {
                     player.pos.x--;
                 }
                 break;
-            case '6':  // Direita
+            case 'd':  // Direita
                 if (mapa[player.pos.x+1][player.pos.y] == empty) {
                     player.pos.x++;
                 }
@@ -299,26 +313,36 @@ void libera_mapa() {
 }
 
 
+player gera_coordenadas() {
+    player new_player;
+    srand(time(NULL));
+    while (check_player(new_player.pos.x, new_player.pos.y) != 1){
+        new_player.pos.x = (rand() % (COMPRIMENTO - 2));
+        new_player.pos.y = (rand() % (ALTURA - 2));
+    }
+    return new_player;
+}
 
 
 
-int main(){  
-    player player = {player.pos.x= 80, player.pos.y= 20};
+
+
+int main() {
     initscr(); // Inicializa a biblioteca ncurses
     define();
     gera_mapa();
     gera_wall();
     gera_barril();
 
-    print_map(player);
-    move_player(player);
+    player new_player = gera_coordenadas(); // cria uma nova estrutura player com coordenadas aleatórias
+    print_map(new_player);
+    move_player(new_player);
 
-    
     getch(); // Aguarda pressionar uma tecla para sair
-    
+
     endwin(); // Encerra o uso da biblioteca ncurses
 
     libera_mapa();
-    
+
     return 0;
 }
