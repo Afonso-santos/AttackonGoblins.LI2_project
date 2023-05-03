@@ -35,6 +35,7 @@ void define() {
 #define boox '='
 #define empty '.'
 #define obstacle '+'
+#define flashlight '!'
 
 
 // char map[LENGTH][HEIGHT];
@@ -52,6 +53,13 @@ typedef struct inventory{
     //armas
     int flashlight_radius;
 }inventory;
+
+typedef struct Player{
+    Position pos ;
+    inventory inventory;
+    //int health;    
+    //int attack;
+}player;
 
 
 
@@ -88,7 +96,7 @@ int check_player(int x, int y) {
 
 
 
-void creat_Triangle(int SIZE, Position pos)
+void create_Triangle(int SIZE, Position pos)
 {
     int i, j;
     for (i = 0; i < SIZE; i++) {
@@ -105,7 +113,7 @@ void creat_Triangle(int SIZE, Position pos)
 }
 
 
-void creat_Square(int SIZE,Position pos)
+void create_Square(int SIZE,Position pos)
 {   
     for (int i=0; i<SIZE; i++) {
         for (int j=0;j<SIZE ; j++) {
@@ -121,7 +129,7 @@ void creat_Square(int SIZE,Position pos)
 
 
 
-void creat_Circle(int SIZE, Position pos)
+void create_Circle(int SIZE, Position pos)
 {
     int x = 0;
     int y = SIZE;
@@ -167,7 +175,7 @@ void creat_Circle(int SIZE, Position pos)
     }
 }
 
-void creat_edge()
+void create_edge()
 {
     srand(time(0));
 
@@ -182,13 +190,13 @@ void creat_edge()
 
         switch (shape) {
             case TRIANGLE:
-                creat_Triangle(SIZE, pos);
+                create_Triangle(SIZE, pos);
                 break;
             case SQUARE:
-                creat_Square(SIZE, pos);
+                create_Square(SIZE, pos);
                 break;
             case CIRCLE:
-                creat_Circle(SIZE, pos);
+                create_Circle(SIZE, pos);
                 break;
             default:
                 break;
@@ -197,7 +205,7 @@ void creat_edge()
 }
 
 
-void creat_barrel()
+void create_barrel()
 {
     srand(time(0));
     int num_barris = rand() % 16 +35; 
@@ -212,7 +220,26 @@ void creat_barrel()
     }
 }
 
-void creat_map()
+void create_flashlight(){
+    srand(time(0));
+    int x = rand() % (LENGTH - 2) ; 
+    int y = rand() % (HEIGHT - 2) ;
+    if (map[x][y] == empty) {
+        map[x][y] = flashlight;
+    }
+}
+
+void remove_flashlight(){
+    for (int y=0; y<HEIGHT; y++){
+        for (int x=0; x<LENGTH; x++){
+            if (map[x][y] == flashlight) {
+                map[x][y] = empty;
+            }
+        }
+    }
+}
+
+void create_map()
 {
     for (int i =0; i<HEIGHT; i++) {
         for (int j =0;j<LENGTH; j++) {
@@ -228,12 +255,6 @@ void creat_map()
 
     }
 }
-void check_luz()
-{
-
-
-}
-
 
 
 void print_map(player player)
@@ -262,36 +283,22 @@ void print_map(player player)
                     attron(COLOR_PAIR(6)); // set color
                     mvprintw(y,x ,"%c" ,map[x][y]); // print cell
                     attroff( COLOR_PAIR(6)); // unset color
-                }else {
+                }else if (map[x][y]==flashlight) {  
+                    attron(COLOR_PAIR(7)); // set color
+                    mvprintw(y,x ,"%c" ,map[x][y]); // print cell
+                    attroff( COLOR_PAIR(7)); // unset color
+                }
+                else {
 
                     attron(COLOR_PAIR(1)); // set color
                     mvprintw(y,x ,"%c" ,map[x][y]); // print cell
                     attroff( COLOR_PAIR(1)); // unset color                   
                 }
-
-
-            
-
-            } else {
-            
-                attron(COLOR_PAIR(2));
-                mvprintw(y,x,"%c" ,map[x][y]); // print black cell
-                attroff(COLOR_PAIR(2));
-            
-            }
+            } 
         }
     }
     mvprintw(player.pos.y,player.pos.x,"%c",player_char);
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -353,6 +360,12 @@ void move_player(player player){
                     player.pos.y++;
                 }
                 break;
+            case 'f':  // apanhar lanterna
+                if (map[player.pos.x][player.pos.y-1]==flashlight || map[player.pos.x][player.pos.y+1]==flashlight || map[player.pos.x-1][player.pos.y]==flashlight || map[player.pos.x+1][player.pos.y]==flashlight || map[player.pos.x-1][player.pos.y-1]==flashlight || map[player.pos.x+1][player.pos.y-1]==flashlight || map[player.pos.x-1][player.pos.y+1]==flashlight || map[player.pos.x+1][player.pos.y+1]==flashlight) {
+                    remove_flashlight();
+                    player.inventory.flashlight_radius=9;
+                }
+                break;
             case 'q':
                 endwin();
                 exit(0);
@@ -364,7 +377,7 @@ void move_player(player player){
 }
 
 
-player creat_coordinates() {
+player create_coordinates() {
     player new_player;
     srand(time(NULL));
     while (check_player(new_player.pos.x, new_player.pos.y) != 1){
@@ -386,25 +399,25 @@ int main() {
     start_color();
    
    
-    init_pair(1, COLOR_WHITE,  COLOR_BLACK);
-    init_pair(2, COLOR_BLACK,  COLOR_BLACK);
+    init_pair(1, COLOR_WHITE, COLOR_BLACK);
+    init_pair(2, COLOR_BLACK, COLOR_BLACK);
     init_color(COLOR_YELLOW, 941, 902, 549);
     init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-    init_pair(4, COLOR_BLUE,   COLOR_BLACK);
-    
-    
+    init_pair(4, COLOR_BLUE, COLOR_BLACK); 
     init_color(COLOR_RED, 800, 400,0 );
-    init_pair(6, COLOR_RED,    COLOR_BLACK);
+    init_pair(6, COLOR_RED, COLOR_BLACK);
+    init_pair(7, COLOR_GREEN, COLOR_BLACK);
 
 
     curs_set(0);
 
-    creat_map();
-    creat_edge();
-    creat_barrel();
+    create_map();
+    create_edge();
+    create_barrel();
+    create_flashlight();
 
-    player new_player = creat_coordinates();
-    new_player.inventory.flashlight_radius=4; // cria uma nova estrutura player com coordenadas aleatórias
+    player new_player = create_coordinates();
+    new_player.inventory.flashlight_radius=6; // cria uma nova estrutura player com coordenadas aleatórias
     print_map(new_player);
     move_player(new_player);
 
