@@ -25,8 +25,7 @@ void define() {
 }
 
 
-// #define HEIGHT  49
-// #define LENGTH 180
+
 #define HEIGHT (max_y-7)
 #define LENGTH (max_x-58)
     
@@ -55,12 +54,7 @@ typedef struct inventory{
 }inventory;
 
 
-typedef struct Player{
-    Position pos ;
-    //int health;    
-    //int attack;
-    inventory inventory;
-}player;
+
 
 
 
@@ -233,6 +227,11 @@ void creat_map()
         }
 
     }
+}
+void check_luz()
+{
+
+
 }
 
 
