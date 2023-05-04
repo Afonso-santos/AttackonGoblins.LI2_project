@@ -257,8 +257,7 @@ void create_map()
 }
 
 
-void print_map(player player)
-{   
+void print_map(player player){   
     clear();
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < LENGTH; x++) {
@@ -363,7 +362,15 @@ void move_player(player player){
             case 'f':  // apanhar lanterna
                 if (map[player.pos.x][player.pos.y-1]==flashlight || map[player.pos.x][player.pos.y+1]==flashlight || map[player.pos.x-1][player.pos.y]==flashlight || map[player.pos.x+1][player.pos.y]==flashlight || map[player.pos.x-1][player.pos.y-1]==flashlight || map[player.pos.x+1][player.pos.y-1]==flashlight || map[player.pos.x-1][player.pos.y+1]==flashlight || map[player.pos.x+1][player.pos.y+1]==flashlight) {
                     remove_flashlight();
-                    player.inventory.flashlight_radius=9;
+                    player.inventory.flashlight_radius=7;
+                }
+                break;
+            case 'l':   //vê mapa todo
+                if (player.inventory.flashlight_radius==7 || player.inventory.flashlight_radius==4){
+                    player.inventory.flashlight_radius=1000;
+                }
+                else if (player.inventory.flashlight_radius==1000){
+                    player.inventory.flashlight_radius=4;
                 }
                 break;
             case 'q':
@@ -417,7 +424,7 @@ int main() {
     create_flashlight();
 
     player new_player = create_coordinates();
-    new_player.inventory.flashlight_radius=6; // cria uma nova estrutura player com coordenadas aleatórias
+    new_player.inventory.flashlight_radius=4; // cria uma nova estrutura player com coordenadas aleatórias
     print_map(new_player);
     move_player(new_player);
 

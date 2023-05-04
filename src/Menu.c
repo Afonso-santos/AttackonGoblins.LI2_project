@@ -80,7 +80,7 @@ void ajuda() {
       attron(COLOR_PAIR(COR_TEXTO3));
       printw("Game Commands:\n\n\n");
       attroff(COLOR_PAIR(COR_TEXTO3));
-      printw("You'll need to use these Numpad keys to play:\n\n");
+      printw("You'll need to use these keys to play:\n\n");
       attron(COLOR_PAIR(COR_TEXTO));
       printw("         8");
       attroff(COLOR_PAIR(COR_TEXTO));
@@ -113,6 +113,10 @@ void ajuda() {
       printw("          3");
       attroff(COLOR_PAIR(COR_TEXTO));
       printw("->bottom left diagonal\n");
+      attron(COLOR_PAIR(COR_TEXTO));
+      printw("         f");
+      attroff(COLOR_PAIR(COR_TEXTO));
+      printw("->catch item");
       refresh();
       getch();
       break;           //volta para o menu de ajuda mal alguma tecla seja pressionada
