@@ -1,21 +1,19 @@
-#include <ncurses.h>
-#include <stdlib.h>
+/*
+#include <stdbool.h>
+#include <alloca.h>
 #include <string.h>
-
-// cores
-#define COR_FUNDO 1
-#define COR_TEXTO 2        //letras azuis
-#define COR_OPCAO 3
-#define COR_TEXTO2 4     //letras vermelhas
-#define COR_TEXTO3 5    //letras verdes
-#define COR_TEXTO4 6    //letras amarelas
-
-
-// opções do menu
-typedef struct {
-  char* titulo;
-  void (*acao)();
-} opcao_menu;
+#include <curses.h>
+#include <math.h>
+#include <ncurses.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "../include/mapa.h"
+#include "../include/player.h"
+#include "../include/obstaculos.h"
+#include "../include/estruturas.h"
+#include "../include/items.h"
+#include "../include/menu.h" /*
 
 /*
 // função que abre a tela de jogo
@@ -27,7 +25,7 @@ void abrir_jogo() {
 }
 */
 
-
+/*
 // função que abre a tela de ajuda
 void ajuda() {
   clear();
@@ -80,7 +78,7 @@ void ajuda() {
       attron(COLOR_PAIR(COR_TEXTO3));
       printw("Game Commands:\n\n\n");
       attroff(COLOR_PAIR(COR_TEXTO3));
-      printw("You'll need to use these keys to play:\n\n");
+      printw("You'll need to use these Numpad keys to play:\n\n");
       attron(COLOR_PAIR(COR_TEXTO));
       printw("         8");
       attroff(COLOR_PAIR(COR_TEXTO));
@@ -113,10 +111,6 @@ void ajuda() {
       printw("          3");
       attroff(COLOR_PAIR(COR_TEXTO));
       printw("->bottom left diagonal\n");
-      attron(COLOR_PAIR(COR_TEXTO));
-      printw("         f");
-      attroff(COLOR_PAIR(COR_TEXTO));
-      printw("->catch item");
       refresh();
       getch();
       break;           //volta para o menu de ajuda mal alguma tecla seja pressionada
@@ -270,4 +264,4 @@ int main() {
 
   endwin();
   return 0;
-}
+} */

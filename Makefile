@@ -1,20 +1,21 @@
-CC := gcc
+$(CC) = gcc
+PNTC=$(wildcard src/* .c)
+PNTH=$(wildcard includes/* .h)
+FLAGS= -IInclude -Wall -Wextra -pedantic -O2 -g
+DIREC:=objetos/
+PNTO=$(PNTC:src/%.c=$(DIREC)%.o)
 
-CFLAGS := -IInclude -Wall -Wextra -pedantic -O2 -g
-LIBS := -lncurses
-	
-SRCS := $(shell find . -name '*.c')
-OBJS := $(SRCS:%.c=%.o)
+run: $(PNTO)
+	$(CC) $(PNTC) $(FLAGS) -lncurses -g -o jogo -lncurses -lm
 
-EXEC := jogo
+compile: run
+	./jogo
 
-.PHONY: all clean
+objetos:
+	mkdir -p $@
 
-all: $(EXEC)
-	
+$(DIREC)%.o: src/%.c | objetos
+	$(CC) $(FLAGS) -o "$@" -c "$<"  
+
 clean:
-	find . -name '*.o' -exec rm -f {} \;
-	rm -f $(EXEC)
-
-$(EXEC): $(OBJS)
-	$(CC) $^ $(LIBS) -o $@
+	rm -rf $(DIREC) jogo *.o
