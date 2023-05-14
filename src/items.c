@@ -77,18 +77,21 @@ void remove_item (Position pos, char **map){
     }
 }
 
+int whats_around(Position pos, char **map){    
 
-int whats_around(Position pos, char **map) {
-    for (int i = pos.x - 1; i <= pos.x + 1; i++) {
-        for (int j = pos.y - 1; j <= pos.y + 1; j++) {
-            if (map[i][j] == enemy_char) {
+    for (int i = -1; i <2 ; i++){
+        for (int j = -1; j <2 ; j++){
+            if(map[pos.x+j][pos.y+i]==enemy_char){
                 return 1;
-            } else if (map[i][j] == player_char) {
+
+            }else if(map[pos.x+j][pos.y+i]==player_char){
                 return 2;
-            } else if (map[i][j] == axe_char || map[i][j] == spear_char || map[i][j] == Flashlight) {
-                return 3;
+
+            }else if(map[pos.x+j][pos.y+i]==axe_char || map[pos.x+j][pos.y+i]==spear_char || map[pos.x+j][pos.y+i]==Flashlight){
+                return 3;          
             }
         }
     }
+ 
     return 0;
 }
