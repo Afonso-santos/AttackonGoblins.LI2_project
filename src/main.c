@@ -17,6 +17,7 @@
 #include "../include/estruturas.h"
 #include "../include/items.h"
 #include "../include/opponents.h"
+#include "../include/menu.h"
 
 int main() {
     initscr(); // Inicializa a biblioteca ncurses
@@ -32,9 +33,7 @@ int main() {
     for (int i = 0; i < LENGTH; i++) {
         map[i] = calloc(HEIGHT, sizeof(char));
     }
-    
-
-    
+      
     
     start_color();
    
@@ -49,33 +48,16 @@ int main() {
     init_pair(7, COLOR_GREEN, COLOR_BLACK);
     init_pair(8, COLOR_WHITE, COLOR_WHITE);
     init_pair(9, COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(COR_FUNDO, COLOR_BLACK, COLOR_WHITE);
+    init_pair(COR_TEXTO, COLOR_BLUE, COLOR_BLACK);
+    init_pair(COR_OPCAO, COLOR_BLACK, COLOR_RED);
+    init_pair(COR_TEXTO2, COLOR_RED, COLOR_BLACK);
+    
     curs_set(0);
 
-
+    while (1){
+        create_menu();
+    }
    
-
-    create_map(max_x, max_y, map);
-    create_edge(max_x, max_y, map);
-    create_barrel(max_x, max_y, map);
-    create_flashlight(max_x, max_y, map);
-    creat_guns(max_x, max_y, map);
-
-    player new_player = create_coordinates(max_x, max_y, map);
-    new_player =inicializa_player(new_player);
-    
-    int numberOfEnemies;
-    
-    Enemy* enemy_array = creat_enemies(&numberOfEnemies, max_x, max_y, map);
-    
-    print_map(new_player, enemy_array, numberOfEnemies, max_x, max_y, map);
-    move_player(new_player, enemy_array, numberOfEnemies, max_x, max_y, map);
-
-    getch(); // Aguarda pressionar uma tecla para sair
-
-    endwin(); // Encerra o uso da biblioteca ncurses
-
-    free_map(max_x, map);
-    free(enemy_array);
-
     return 0;
 }

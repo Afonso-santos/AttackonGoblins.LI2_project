@@ -1,4 +1,3 @@
-/*
 #include <stdbool.h>
 #include <alloca.h>
 #include <string.h>
@@ -13,19 +12,48 @@
 #include "../include/obstaculos.h"
 #include "../include/estruturas.h"
 #include "../include/items.h"
-#include "../include/menu.h" /*
+#include "../include/opponents.h"
+#include "../include/menu.h"
 
-/*
+
 // função que abre a tela de jogo
 void abrir_jogo() {
   clear();
-  printw("Iniciando o jogo...\n");        <--------ao clicar aqui terá de abrir o jogo 
-  refresh();                                             mas não sei como se faz
-  getch();
-}
-*/
+  int max_x, max_y;
+  define(&max_x, &max_y);
+  #define HEIGHT (max_y-7)
+  #define LENGTH (max_x-58)       
 
-/*
+  char **map = calloc(LENGTH, sizeof(char *));
+  for (int i = 0; i < LENGTH; i++) {
+      map[i] = calloc(HEIGHT, sizeof(char));
+  }
+
+  create_map(max_x, max_y, map);
+  create_edge(max_x, max_y, map);
+  create_barrel(max_x, max_y, map);
+  create_flashlight(max_x, max_y, map);
+  creat_guns(max_x, max_y, map);
+
+  player new_player = create_coordinates(max_x, max_y, map);
+  new_player =inicializa_player(new_player);
+  
+  int numberOfEnemies;
+  
+  Enemy* enemy_array = creat_enemies(&numberOfEnemies, max_x, max_y, map);
+  
+  print_map(new_player, enemy_array, numberOfEnemies, max_x, max_y, map);
+  move_player(new_player, enemy_array, numberOfEnemies, max_x, max_y, map);
+
+  getch(); // Aguarda pressionar uma tecla para sair
+
+  endwin(); // Encerra o uso da biblioteca ncurses
+  
+  free_map(max_x, map);
+  free(enemy_array);
+}
+
+
 // função que abre a tela de ajuda
 void ajuda() {
   clear();
@@ -78,7 +106,7 @@ void ajuda() {
       attron(COLOR_PAIR(COR_TEXTO3));
       printw("Game Commands:\n\n\n");
       attroff(COLOR_PAIR(COR_TEXTO3));
-      printw("You'll need to use these Numpad keys to play:\n\n");
+      printw("You'll need to use these keys to play:\n\n");
       attron(COLOR_PAIR(COR_TEXTO));
       printw("         8");
       attroff(COLOR_PAIR(COR_TEXTO));
@@ -110,7 +138,15 @@ void ajuda() {
       attron(COLOR_PAIR(COR_TEXTO));
       printw("          3");
       attroff(COLOR_PAIR(COR_TEXTO));
-      printw("->bottom left diagonal\n");
+      printw("->bottom right diagonal\n");
+      attron(COLOR_PAIR(COR_TEXTO));
+      printw("         f");
+      attroff(COLOR_PAIR(COR_TEXTO));
+      printw("->catch item");
+      attron(COLOR_PAIR(COR_TEXTO));
+      printw("                    l");
+      attroff(COLOR_PAIR(COR_TEXTO));
+      printw("->total light on map (on/off)\n");
       refresh();
       getch();
       break;           //volta para o menu de ajuda mal alguma tecla seja pressionada
@@ -170,22 +206,13 @@ void sair() {
   exit(0);
 }
 
-int main() {
-  // inicializa o ncurses
-  initscr();
-  cbreak();
-  noecho();
-  curs_set(0);   //desativa o cursor
-  keypad(stdscr, TRUE);
-  start_color();
-  init_pair(COR_FUNDO, COLOR_BLACK, COLOR_WHITE);
-  init_pair(COR_TEXTO, COLOR_BLUE, COLOR_BLACK);
-  init_pair(COR_OPCAO, COLOR_BLACK, COLOR_RED);
-  init_pair(COR_TEXTO2, COLOR_RED, COLOR_BLACK);
 
-  // cria as opções do menu
+
+
+void create_menu(){
+    // cria as opções do menu
   opcao_menu opcoes[] = {
-      {"New Game", sair},           //coloquei "sair" porque não sei como se passa para o jogo
+      {"New Game", abrir_jogo},          
       {"Help", ajuda},
       {"Credits", creditos},
       {"Leave", sair}
@@ -196,7 +223,6 @@ int main() {
 
   // loop do menu
   while (1) {
-    //parte para pintar as linhas a branco
     clear();
     for (int j = 0; j < 5; j++) {
         attron(COLOR_PAIR(COR_TEXTO2));  // Ativar a cor de fundo definida pelo par de cores especificado
@@ -244,13 +270,13 @@ int main() {
     // seleção do jogador
     int tecla = getch();
     switch (tecla) {
-      case KEY_UP:
+      case 65:    //Código ASCII para seta para cima
         opcao_atual--;
         if (opcao_atual < 0) {
           opcao_atual = 3;
         }
         break;
-      case KEY_DOWN:
+      case 66:     //Código ASCII para seta para baixo
         opcao_atual++;
         if (opcao_atual > 3) {
           opcao_atual = 0;
@@ -261,7 +287,4 @@ int main() {
         break;
     }
   }
-
-  endwin();
-  return 0;
-} */
+}
