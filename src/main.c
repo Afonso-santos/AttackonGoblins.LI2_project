@@ -21,24 +21,11 @@
 
 int main() {
     initscr(); // Inicializa a biblioteca ncurses
-    timeout(1*1000);
     curs_set(0);
-
-    int max_x, max_y;
-    define(&max_x, &max_y);
-    #define HEIGHT (max_y-7)
-    #define LENGTH (max_x-58)       
-
-    char **map = calloc(LENGTH, sizeof(char *));
-    for (int i = 0; i < LENGTH; i++) {
-        map[i] = calloc(HEIGHT, sizeof(char));
-    }
-      
-    
+          
     start_color();
-   
-   
-    init_pair(1, COLOR_WHITE, COLOR_BLACK); // player  eparedes
+
+    init_pair(1, COLOR_WHITE, COLOR_BLACK); // player e paredes
     init_pair(2, COLOR_BLACK, COLOR_BLACK);
     init_color(COLOR_YELLOW, 941, 902, 549);
     init_pair(3, COLOR_YELLOW, COLOR_BLACK);
@@ -52,8 +39,6 @@ int main() {
     init_pair(COR_TEXTO, COLOR_BLUE, COLOR_BLACK);
     init_pair(COR_OPCAO, COLOR_BLACK, COLOR_RED);
     init_pair(COR_TEXTO2, COLOR_RED, COLOR_BLACK);
-    
-    curs_set(0);
 
     while (1){
         create_menu();

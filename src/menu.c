@@ -18,6 +18,7 @@
 
 // função que abre a tela de jogo
 void abrir_jogo() {
+  timeout(1*1000);
   clear();
   int max_x, max_y;
   define(&max_x, &max_y);
@@ -48,7 +49,7 @@ void abrir_jogo() {
   getch(); // Aguarda pressionar uma tecla para sair
 
   endwin(); // Encerra o uso da biblioteca ncurses
-  
+
   free_map(max_x, map);
   free(enemy_array);
 }
