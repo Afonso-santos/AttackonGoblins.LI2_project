@@ -17,7 +17,6 @@
 #include "../include/combat.h"
 
 
-
 int check(int x, int y,int max_x,int max_y, char **map) {
     if (x < 2 || x >= LENGTH - 2|| y < 2 || y >= HEIGHT - 2) {
         return 0;
@@ -55,13 +54,6 @@ player inicializa_player(player new_player){
 
     return new_player;
 }
-
-
-
-
-
-
-
 
 
 void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, int max_y, char **map){
@@ -114,14 +106,9 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                     player.pos.y++;
                 }
                 break;
-            case 'f':  // apanhar lanterna
+            case 'f':  // apanhar item
                 if (whats_around(player.pos,map)==3) {
                     pos_item=collected(player.pos,map);
-                    
-
-                        // player.inventory.flashlight.collected=1;
-                        // player.inventory.flashlight.radius=7;
-
                     if (map[pos_item.x][pos_item.y]==Flashlight) {
                         player.inventory.flashlight.collected=1;
                         player.inventory.flashlight.radius=7;
@@ -140,14 +127,10 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                     }
                     remove_item(pos_item,map);
                 }
-                
-
                 break;
-            case 'l':   //vê mapa todo
-                
+            case 'l':   //vê mapa todo  
                 if (player.inventory.flashlight.radius==7 || player.inventory.flashlight.radius==4){
                     player.inventory.flashlight.radius=1000;
-                    
                 }
                 else if (player.inventory.flashlight.collected==1){
                     player.inventory.flashlight.radius=7;
@@ -156,12 +139,8 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                 }
                 break;
             case ' ':   //atacar
-
                 player_combat(player,Enemy_array,num_enemies,map);
-                //sleep(player.inventory.armas.speed);          
-
-          
-
+                //sleep(player.inventory.armas.speed);    
                 break;
             case 'q':
                 endwin();

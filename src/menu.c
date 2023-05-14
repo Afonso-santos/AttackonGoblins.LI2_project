@@ -208,8 +208,6 @@ void sair() {
 }
 
 
-
-
 void create_menu(){
     // cria as opções do menu
   opcao_menu opcoes[] = {
