@@ -20,11 +20,11 @@ void create_flashlight(int max_x,int max_y, char **map);
 
 void creat_guns(int max_x,int max_y, char **map);
 
-void remove_item (Position pos,char **map);
+void remove_thing (Position pos,char **map);
 
-int whats_around(Position pos, char **map);
+int whats_around(player player, char **map);
 
-Position collected(Position pos, char **map);
+Position collected(player player, char **map);
 
 
 #endif

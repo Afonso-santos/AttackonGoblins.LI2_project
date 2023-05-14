@@ -12,9 +12,6 @@
 #include <time.h>
 
 
-
-
-
 #define HEIGHT (max_y-7)
 #define LENGTH (max_x-58)
 #define player_char '@'
@@ -38,12 +35,9 @@ typedef struct Position {
 } Position;
 
 
-
 typedef struct armas {
     int collected;
-    int damage;  // = 25
-    float speed; // = 2.5
-    int range;
+    char name[20];
 } armas;
 
 
@@ -61,13 +55,13 @@ typedef struct Player{
     Position pos ;
     inventory inventory;
     int health;    
-    
 }player;
 
 typedef struct Enemy{
     Position pos;
     int health;
     int attack;
+    int active;
 }Enemy;
 
 #endif 

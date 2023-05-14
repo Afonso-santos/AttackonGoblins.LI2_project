@@ -13,6 +13,7 @@
 #include "../include/estruturas.h"
 #include "../include/items.h"
 #include "../include/opponents.h"
+#include "../include/menu.h"
 
 
 void define(int *max_x, int *max_y) {
@@ -21,11 +22,6 @@ void define(int *max_x, int *max_y) {
     // Obtém as dimensões da tela
     *max_y = getmaxy(stdscr);
     *max_x = getmaxx(stdscr);
-
-    // map = malloc(sizeof(char*) * (*max_x));
-    // for (int i = 0; i < (*max_x); i++) {
-        // map[i] = malloc(sizeof(char) * (*max_y));
-    // }
 }
 
 void create_edge(int max_x,int max_y, char **map){
@@ -73,7 +69,7 @@ void create_map(int max_x,int max_y, char **map){
 }
 
 void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, char **map){   
-     clear();
+    clear();
     
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < LENGTH; x++) {
@@ -132,26 +128,37 @@ void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, 
             } 
         }
     }
+    start_color();
+    init_pair(COR_TEXTO2, COLOR_RED, COLOR_BLACK);
+    mvprintw(HEIGHT/2, LENGTH+5, "Player Health:");
+    attron(COLOR_PAIR(COR_TEXTO2));
+    mvprintw(HEIGHT/2, LENGTH+20, "%d", player.health);
+    attroff(COLOR_PAIR(COR_TEXTO2));
+    mvprintw((HEIGHT/2)+2, LENGTH+5, "Current weapon:");
+    attron(COLOR_PAIR(COR_TEXTO2));
+    mvprintw((HEIGHT/2)+2, LENGTH+21, "%s", player.inventory.armas.name);
+    attroff(COLOR_PAIR(COR_TEXTO2));
+    if (player.inventory.flashlight.collected == 1){
+        mvprintw((HEIGHT/2)+4, LENGTH+5, "Flashlight collected:");
+        attron(COLOR_PAIR(COR_TEXTO2));
+        mvprintw((HEIGHT/2)+4, LENGTH+27, "YES");
+        attroff(COLOR_PAIR(COR_TEXTO2));
+    }
+    else{
+        mvprintw((HEIGHT/2)+4, LENGTH+5, "Flashlight collected:");
+        attron(COLOR_PAIR(COR_TEXTO2));
+        mvprintw((HEIGHT/2)+4, LENGTH+27, "NO");
+        attroff(COLOR_PAIR(COR_TEXTO2));
+    }
     mvprintw(player.pos.y, player.pos.x, "%c", player_char);
 }
 
 
 
-
-
 void free_map(int max_x, char **map) {
-    // Libera memória alocada para o map
+    // Libera memória alocada para o mapa
     for (int i = 0; i < max_x; i++) {
         free(map[i]);
     }
     free(map);
 }
-
-
-
-
-
-
-
-
-

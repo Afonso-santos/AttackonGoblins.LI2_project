@@ -14,7 +14,6 @@
 #include "../include/estruturas.h"
 #include "../include/items.h"
 #include "../include/opponents.h"
-#include "../include/combat.h"
 
 
 int check(int x, int y,int max_x,int max_y, char **map) {
@@ -46,20 +45,16 @@ player inicializa_player(player new_player){
     
     new_player.inventory.flashlight.collected=0;
     new_player.inventory.flashlight.radius=4;
-
-    new_player.inventory.armas.collected=1;
-    new_player.inventory.armas.damage=25;
-    new_player.inventory.armas.speed=2.5;
-    new_player.inventory.armas.range=2;
+    new_player.inventory.armas.collected=0;
+    strcpy(new_player.inventory.armas.name, "SWORD");
 
     return new_player;
 }
 
 
 void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, int max_y, char **map){
-    Position pos_item;
+    Position pos_thing;
     while(1){
-      
         int direction = getch();
         switch (direction) {
             case 'w':  // Cima
@@ -67,7 +62,17 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                     player.pos.y--;
                 }
                 break;
+            case '8':  // Cima
+                if (map[player.pos.x][player.pos.y-1] == empty ) {
+                    player.pos.y--;
+                }
+                break;  
             case 's':  // Baixo
+                if (map[player.pos.x][player.pos.y+1] == empty) {
+                    player.pos.y++;
+                }
+                break;
+            case '2':  // Baixo
                 if (map[player.pos.x][player.pos.y+1] == empty) {
                     player.pos.y++;
                 }
@@ -77,7 +82,17 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                     player.pos.x--;
                 }
                 break;
+            case '4':  // Esquerda
+                if (map[player.pos.x-1][player.pos.y] == empty) {
+                    player.pos.x--;
+                }
+                break;
             case 'd':  // Direita
+                if (map[player.pos.x+1][player.pos.y] == empty) {
+                    player.pos.x++;
+                }
+                break;
+            case '6':  // Direita
                 if (map[player.pos.x+1][player.pos.y] == empty) {
                     player.pos.x++;
                 }
@@ -107,25 +122,22 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                 }
                 break;
             case 'f':  // apanhar item
-                if (whats_around(player.pos,map)==3) {
-                    pos_item=collected(player.pos,map);
-                    if (map[pos_item.x][pos_item.y]==Flashlight) {
+                if (whats_around(player,map)==3) {
+                    pos_thing=collected(player,map);
+                    if (map[pos_thing.x][pos_thing.y]==Flashlight) {
                         player.inventory.flashlight.collected=1;
                         player.inventory.flashlight.radius=7;
                     }
-                    else if (map[pos_item.x][pos_item.y]==axe_char) {
+                    else if (map[pos_thing.x][pos_thing.y]==axe_char){
+                        strcpy(player.inventory.armas.name, "AXE");;
                         player.inventory.armas.collected=1;
-                        player.inventory.armas.damage=35;
-                        player.inventory.armas.speed=3.25;
-                        player.inventory.armas.range=3;
                     }
-                    else if (map[pos_item.x][pos_item.y]==spear_char) {
+                    else if (map[pos_thing.x][pos_thing.y]==spear_char){
+                        strcpy(player.inventory.armas.name, "SPEAR");;
                         player.inventory.armas.collected=1;
-                        player.inventory.armas.damage=20;
-                        player.inventory.armas.speed=1.5;
-                        player.inventory.armas.range=4;
                     }
-                    remove_item(pos_item,map);
+
+                    remove_thing(pos_thing,map);
                 }
                 break;
             case 'l':   //vê mapa todo  
@@ -138,15 +150,39 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                     player.inventory.flashlight.radius=4;
                 }
                 break;
-            case ' ':   //atacar
-                player_combat(player,Enemy_array,num_enemies,map);
-                //sleep(player.inventory.armas.speed);    
+            case 32:   //atacar   (o 32 é o código ASCII da tecla "space")
+                if (whats_around(player, map) == 1) {
+                    pos_thing = collected(player, map);
+                    if (map[pos_thing.x][pos_thing.y] == enemy_char) {
+                        for (int i = 0; i < num_enemies; i++) {
+                            if (Enemy_array[i].pos.x == pos_thing.x && Enemy_array[i].pos.y == pos_thing.y && Enemy_array[i].health==50) {
+                                Enemy_array[i].health = 0;
+                                Enemy_array[i].active = 0; // Definir o inimigo como inativo
+                                remove_thing(pos_thing, map);
+                                break;
+                            }
+                            else if (Enemy_array[i].pos.x == pos_thing.x && Enemy_array[i].pos.y == pos_thing.y && Enemy_array[i].health==100 && player.inventory.armas.collected==1){  //se tiver uma arma ele mata com um hit
+                                Enemy_array[i].health = 0;
+                                Enemy_array[i].active = 0; // Definir o inimigo como inativo
+                                remove_thing(pos_thing, map);
+                                break;
+                            }
+                            else if (Enemy_array[i].pos.x == pos_thing.x && Enemy_array[i].pos.y == pos_thing.y && Enemy_array[i].health==100 && player.inventory.armas.collected==0){   //se não tiver arma mata com dois hits
+                                Enemy_array[i].health = 50;
+                            }
+                        }
+                    }
+                }   
                 break;
             case 'q':
                 endwin();
                 exit(0);
                 break;
         }
+        if (whats_around(player, map) == 1 && direction!=32) {       //o mob só ataca caso o jogador não o ataque
+            player.health = player.health - Enemy_array[2].attack;
+        }
+        print_map(player,Enemy_array,num_enemies,max_x,max_y,map);
         move_enemy(player, Enemy_array, num_enemies, map);
         print_map(player,Enemy_array,num_enemies,max_x,max_y,map);
     }

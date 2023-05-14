@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 #include "../include/mapa.h"
 #include "../include/player.h"
 #include "../include/obstaculos.h"
@@ -42,16 +43,16 @@ void abrir_jogo() {
   int numberOfEnemies;
   
   Enemy* enemy_array = creat_enemies(&numberOfEnemies, max_x, max_y, map);
-  
   print_map(new_player, enemy_array, numberOfEnemies, max_x, max_y, map);
   move_player(new_player, enemy_array, numberOfEnemies, max_x, max_y, map);
 
   getch(); // Aguarda pressionar uma tecla para sair
 
-  endwin(); // Encerra o uso da biblioteca ncurses
-
-  free_map(max_x, map);
+ // endwin(); // Encerra o uso da biblioteca ncurses
+  
+  //free_map(max_x, map);       ISTO ESTÁ A DAR ERRO
   free(enemy_array);
+  game_over();
 }
 
 
@@ -91,7 +92,8 @@ void ajuda() {
       attron(COLOR_PAIR(COR_TEXTO3));
       printw("Game instructions:\n\n\n");
       attroff(COLOR_PAIR(COR_TEXTO2));
-      printw("-The main objective in this game is to kill all the mobs in the room you are currently in and that's the only way you can advance to the next room.\n");
+      printw("-The main objective in this game is to kill all the mobs in the room you are currently in.\n");
+      printw("-Initially the player has a sword and it is necessary to hit the mob twice to kill it. But if you pick up a spear or an axe you can kill them with a single hit.\n");
       printw("-The game will end once you've killed all mobs in all existing rooms.\n");
       printw("-And don't forget to be careful when facing the mobs so you don't have to reset all your progress.\n\n");
       attron(COLOR_PAIR(COR_TEXTO4));
@@ -148,6 +150,14 @@ void ajuda() {
       printw("                    l");
       attroff(COLOR_PAIR(COR_TEXTO));
       printw("->total light on map (on/off)\n");
+      attron(COLOR_PAIR(COR_TEXTO));
+      printw("         space");
+      attroff(COLOR_PAIR(COR_TEXTO));
+      printw("->atack");
+      attron(COLOR_PAIR(COR_TEXTO));
+      printw("                     q");
+      attroff(COLOR_PAIR(COR_TEXTO));
+      printw("->close the game\n");
       refresh();
       getch();
       break;           //volta para o menu de ajuda mal alguma tecla seja pressionada
@@ -201,6 +211,24 @@ void creditos() {
   }
 }
 
+// função que abre a tela de game over
+void game_over() {
+  clear();
+  start_color();
+  init_pair(COR_TEXTO2, COLOR_RED, COLOR_BLACK);
+  attron(COLOR_PAIR(COR_TEXTO2));
+  attron(A_BOLD);       //para imprimir a frase a negrito
+  for (int k=0; k<LINES/2; k++) printw("\n");
+  for (int k=0; k<(COLS-9)/2; k++) printw(" ");
+  printw ("Game Over");
+  attroff(A_BOLD);
+  attroff(COLOR_PAIR(COR_TEXTO2));
+  refresh();
+  sleep(3);
+  create_menu();
+}
+
+
 // função que fecha o programa
 void sair() {
   endwin();
@@ -214,7 +242,7 @@ void create_menu(){
       {"New Game", abrir_jogo},          
       {"Help", ajuda},
       {"Credits", creditos},
-      {"Leave", sair}
+      {"Leave", sair},
   };
 
   // variável que armazena a opção selecionada

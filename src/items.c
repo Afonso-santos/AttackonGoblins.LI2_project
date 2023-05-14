@@ -51,47 +51,47 @@ void creat_guns(int max_x,int max_y, char **map){
 }
 
 
-Position collected(Position pos, char **map){
-    Position pos_item;
-    
-    for (int i = -1; i <2 ; i++){
-        for (int j = -1; j <2 ; j++){
-            
-            if (map[pos.x+i][pos.y+j]==Flashlight || map[pos.x+i][pos.y+j]==axe_char || map[pos.x+i][pos.y+j]==spear_char ) {
-                pos_item.x=pos.x+i;
-                pos_item.y=pos.y+j;
-                
-                return pos_item;
+Position collected(player player, char **map) {
+    Position pos_thing;
+    pos_thing.x = -1;
+    pos_thing.y = -1;
+
+    for (int i = player.pos.x - 1; i <= player.pos.x + 1; i++) {
+        for (int j = player.pos.y - 1; j <= player.pos.y + 1; j++) {
+            if (i!=player.pos.x || j!=player.pos.y){
+                if (map[i][j] == Flashlight || map[i][j] == axe_char || map[i][j] == spear_char || map[i][j] == enemy_char) {
+                    pos_thing.x = i;
+                    pos_thing.y = j;
+                    return pos_thing;
+                }
             }
         }
     }
-    pos_item.x=-1;
-    pos_item.y=-1;
-    return pos_item;
+
+    return pos_thing;
 }
 
 
-void remove_item (Position pos, char **map){
-    if(map[pos.x][pos.y]==Flashlight || map[pos.x][pos.y]==axe_char || map[pos.x][pos.y]==spear_char || map[pos.x][pos.y]==swoord_char){
+void remove_thing (Position pos, char **map){
+    if(map[pos.x][pos.y]==Flashlight || map[pos.x][pos.y]==axe_char || map[pos.x][pos.y]==spear_char || map[pos.x][pos.y]==swoord_char || map[pos.x][pos.y]==enemy_char){
         map[pos.x][pos.y]=empty;
     }
 }
 
-int whats_around(Position pos, char **map){    
 
-    for (int i = -1; i <2 ; i++){
-        for (int j = -1; j <2 ; j++){
-            if(map[pos.x+j][pos.y+i]==enemy_char){
-                return 1;
-
-            }else if(map[pos.x+j][pos.y+i]==player_char){
-                return 2;
-
-            }else if(map[pos.x+j][pos.y+i]==axe_char || map[pos.x+j][pos.y+i]==spear_char || map[pos.x+j][pos.y+i]==Flashlight){
-                return 3;          
+int whats_around(player player, char **map) {
+    for (int i = player.pos.x - 1; i <= player.pos.x + 1; i++) {
+        for (int j = player.pos.y - 1; j <= player.pos.y + 1; j++) {
+            if (i!=player.pos.x || j!=player.pos.y){
+                if (map[i][j] == enemy_char) {
+                    return 1;
+                } else if (map[i][j] == player_char) {
+                    return 2;
+                } else if (map[i][j] == axe_char || map[i][j] == spear_char || map[i][j] == Flashlight) {
+                    return 3;
+                }
             }
         }
     }
- 
     return 0;
 }

@@ -1,4 +1,3 @@
-
 #include <string.h>
 #include <stdbool.h>
 #include <alloca.h>
@@ -18,69 +17,55 @@
 #include "../include/estruturas.h"
 #include "../include/items.h"
 #include "../include/opponents.h"
-#include "../include/combat.h"
-
-
-
 
 
 void move_enemy(player player, Enemy enemy[], int num_enemies, char **map) { 
     
-    for (int i = 0; i < num_enemies; i++) {
-        
-        
-        int distance = sqrt(pow(enemy[i].pos.y - player.pos.y, 2) + pow(enemy[i].pos.x - player.pos.x, 2));
-          
-        
-        if(enemy[i].health>0){
-
-
-          
-            if (distance<=player.inventory.flashlight.radius+1) {
-
-                //enemy_combat(player,enemy,num_enemies,map);
-
-                if (enemy[i].pos.x < player.pos.x) {
-                    if (map[enemy[i].pos.x + 1][enemy[i].pos.y] == empty) {
-                        map[enemy[i].pos.x][enemy[i].pos.y] = empty;
-                        enemy[i].pos.x++;
-                        map[enemy[i].pos.x][enemy[i].pos.y] = enemy_char;
-                    }
-                } else if (enemy[i].pos.x > player.pos.x) {
-                    if (map[enemy[i].pos.x - 1][enemy[i].pos.y] == empty) {
-                        map[enemy[i].pos.x][enemy[i].pos.y] = empty;
-                        enemy[i].pos.x--;
-                        map[enemy[i].pos.x][enemy[i].pos.y] = enemy_char;
-                    }
-                } else if (enemy[i].pos.y < player.pos.y) {
-                    if (map[enemy[i].pos.x][enemy[i].pos.y + 1] == empty) {
-                        map[enemy[i].pos.x][enemy[i].pos.y] = empty;
-                        enemy[i].pos.y++;
-                        map[enemy[i].pos.x][enemy[i].pos.y] = enemy_char;
-                    }
-                } else if (enemy[i].pos.y > player.pos.y) {
-                    if (map[enemy[i].pos.x][enemy[i].pos.y - 1] == empty) {
-                        map[enemy[i].pos.x][enemy[i].pos.y] = empty;
-                        enemy[i].pos.y--;
-                        map[enemy[i].pos.x][enemy[i].pos.y] = enemy_char;
+    for (int i = 0; i < num_enemies; i++) {  
+        int distance = sqrt(pow(enemy[i].pos.y - player.pos.y, 2) + pow(enemy[i].pos.x - player.pos.x, 2));     
+        if(enemy[i].health>0 && enemy[i].active==1){ 
+            if (whats_around(player, map) != 1){         
+                if (distance<=player.inventory.flashlight.radius+1) {
+                    if (enemy[i].pos.x < player.pos.x) {
+                        if (map[enemy[i].pos.x + 1][enemy[i].pos.y] == empty) {
+                            map[enemy[i].pos.x][enemy[i].pos.y] = empty;
+                            enemy[i].pos.x++;
+                            map[enemy[i].pos.x][enemy[i].pos.y] = enemy_char;
+                        }
+                    } else if (enemy[i].pos.x > player.pos.x) {
+                        if (map[enemy[i].pos.x - 1][enemy[i].pos.y] == empty) {
+                            map[enemy[i].pos.x][enemy[i].pos.y] = empty;
+                            enemy[i].pos.x--;
+                            map[enemy[i].pos.x][enemy[i].pos.y] = enemy_char;
+                        }
+                    } else if (enemy[i].pos.y < player.pos.y) {
+                        if (map[enemy[i].pos.x][enemy[i].pos.y + 1] == empty) {
+                            map[enemy[i].pos.x][enemy[i].pos.y] = empty;
+                            enemy[i].pos.y++;
+                            map[enemy[i].pos.x][enemy[i].pos.y] = enemy_char;
+                        }
+                    } else if (enemy[i].pos.y > player.pos.y) {
+                        if (map[enemy[i].pos.x][enemy[i].pos.y - 1] == empty) {
+                            map[enemy[i].pos.x][enemy[i].pos.y] = empty;
+                            enemy[i].pos.y--;
+                            map[enemy[i].pos.x][enemy[i].pos.y] = enemy_char;
+                        }
                     }
                 }
-
-
-            }else{
-                int dx = rand() % 3 - 1; 
-                int dy = rand() % 3 - 1; 
-                if (map[enemy[i].pos.x + dx][enemy[i].pos.y + dy] == empty) { 
-                    map[enemy[i].pos.x][enemy[i].pos.y] = empty; 
-                    enemy[i].pos.x += dx; 
-                    enemy[i].pos.y += dy;
-                    map[enemy[i].pos.x][enemy[i].pos.y] = enemy_char;   
+                else{
+                    int dx = rand() % 3 - 1; 
+                    int dy = rand() % 3 - 1; 
+                    if (map[enemy[i].pos.x + dx][enemy[i].pos.y + dy] == empty) { 
+                        map[enemy[i].pos.x][enemy[i].pos.y] = empty; 
+                        enemy[i].pos.x += dx; 
+                        enemy[i].pos.y += dy;
+                        map[enemy[i].pos.x][enemy[i].pos.y] = enemy_char;   
+                    }
                 }
             }            
         }
     }
 }
-
 
 
 Enemy* creat_enemies(int*number_enemies, int max_x, int max_y, char **map) {
@@ -95,7 +80,7 @@ Enemy* creat_enemies(int*number_enemies, int max_x, int max_y, char **map) {
 
         // Generate a random position that is not occupied by another enemy
         int pos_taken;
-        do {
+        while (check_player(new_enemy.pos.x, new_enemy.pos.y,max_x,max_y,map) != 1 || pos_taken == 1){
             pos_taken = 0;
             new_enemy.pos.x = rand() % (LENGTH - 2);
             new_enemy.pos.y = rand() % (HEIGHT - 2);
@@ -106,16 +91,14 @@ Enemy* creat_enemies(int*number_enemies, int max_x, int max_y, char **map) {
                     break;
                 }
             }
-        } while (check_player(new_enemy.pos.x, new_enemy.pos.y,max_x,max_y,map) != 1 || pos_taken == 1);
-
-
+        }
         // Set the enemy's health and attack
         new_enemy.health = 100;
-        new_enemy.attack = 10;
+        new_enemy.attack = 5;
+        new_enemy.active = 1;
         map[new_enemy.pos.x][new_enemy.pos.y] = enemy_char;
         enemy_array[i] = new_enemy;
     }
     *number_enemies = num_enemies;
     return enemy_array;
 }
-
