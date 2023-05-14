@@ -22,7 +22,11 @@
 #define boox '='
 #define empty '.'
 #define obstacle '+'
-#define flashlight 'F'
+#define Flashlight 'F'
+#define enemy_char 'G'
+#define axe_char 'T'
+#define spear_char  '!'
+#define swoord_char '1'
 #define Shapes 3
 // #define SIZE 5
 
@@ -33,16 +37,37 @@ typedef struct Position {
     int y;
 } Position;
 
+
+
+typedef struct armas {
+    int collected;
+    int damage;  // = 25
+    float speed; // = 2.5
+    int range;
+} armas;
+
+
+typedef struct flashlight {
+    int collected;
+    int radius;
+} Flash;
+
 typedef struct inventory{
-    //armas
-    int flashlight_radius;
+    armas armas;
+    Flash flashlight;
 }inventory;
 
 typedef struct Player{
     Position pos ;
     inventory inventory;
-    //int health;    
-    //int attack;
+    int health;    
+    
 }player;
+
+typedef struct Enemy{
+    Position pos;
+    int health;
+    int attack;
+}Enemy;
 
 #endif 

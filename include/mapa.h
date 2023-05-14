@@ -27,7 +27,7 @@ void create_edge (int max_x,int max_y, char **map);
 
 void create_map(int max_x,int max_y, char **map);
 
-void print_map(player player,int max_x,int max_y, char **map);
+void print_map(player player, Enemy *enemy, int num_enemies,int max_x,int max_y, char **map);
 
 void free_map(int max_x, char **map);
 

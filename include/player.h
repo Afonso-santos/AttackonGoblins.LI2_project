@@ -16,8 +16,10 @@ int check(int x, int y,int max_x,int max_y, char **map);
 
 int check_player(int x, int y,int max_x,int max_y, char **map);
 
-void move_player(player player, int max_x, int max_y, char **map);
+void move_player(player player,Enemy *Enemy_array,int num_enemies ,int max_x, int max_y, char **map);
 
 player create_coordinates(int max_x,int max_y, char **map);
+
+player inicializa_player(player player);
 
 #endif

@@ -12,6 +12,7 @@
 #include "../include/obstaculos.h"
 #include "../include/estruturas.h"
 #include "../include/items.h"
+#include "../include/opponents.h"
 
 
 void define(int *max_x, int *max_y) {
@@ -71,47 +72,72 @@ void create_map(int max_x,int max_y, char **map){
     }
 }
 
-void print_map(player player,int max_x,int max_y, char **map){   
-    clear();
+void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, char **map){   
+     clear();
+    
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < LENGTH; x++) {
+
             int distance = sqrt(pow(y - player.pos.y, 2) + pow(x - player.pos.x, 2));
             
-            if (y==0 ||y==HEIGHT-1 ||x==0 ||x==LENGTH-1 ) {
+            if (y == 0 || y == HEIGHT-1 || x == 0 || x == LENGTH-1) {
+                // Print walls
+                attron(COLOR_PAIR(4)); 
+                mvprintw(y, x, "%c", map[x][y]); 
+                attroff(COLOR_PAIR(4)); 
+
+            } else if (distance < player.inventory.flashlight.radius) {
+                // Print visible cells
+                if (map[x][y] == empty) {
+                    // Print empty cell
+                    attron(COLOR_PAIR(3)); 
+                    mvprintw(y, x, "%c", map[x][y]); 
+                    attroff(COLOR_PAIR(3)); 
+                } else if (map[x][y] == boox) {
+                    // Print box
+                    attron(COLOR_PAIR(6)); 
+                    mvprintw(y, x, "%c", map[x][y]); 
+                    attroff(COLOR_PAIR(6)); 
+
+                } else if (map[x][y] == Flashlight || map[x][y] == axe_char || map[x][y] == spear_char || map[x][y] == swoord_char) {
+                    // Print flashlight
+                    attron(COLOR_PAIR(9)); 
+                    mvprintw(y, x, "%c", map[x][y]); 
+                    attroff(COLOR_PAIR(9)); 
                 
-                attron(COLOR_PAIR(4)); // set color
-                mvprintw(y,x ,"%c" ,map[x][y]); // print cell
-                attroff( COLOR_PAIR(4)); // unset color
-                            
-            }else if (distance < player.inventory.flashlight_radius) {
+                } else if (map[x][y] == enemy_char) {
+                    // Print enemy
+                    bool enemy_present = false;
+                    for (int i = 0; i < num_enemies; i++) {
+                        if (enemy[i].health && enemy[i].pos.x == x && enemy[i].pos.y == y) {
 
-                if (map[x][y]==empty) {
-
-                    attron(COLOR_PAIR(3)); // set color
-                    mvprintw(y,x ,"%c" ,map[x][y]); // print cell
-                    attroff( COLOR_PAIR(3)); // unset color
-
-                }else if (map[x][y]==boox) {
-                    
-                    attron(COLOR_PAIR(6)); // set color
-                    mvprintw(y,x ,"%c" ,map[x][y]); // print cell
-                    attroff( COLOR_PAIR(6)); // unset color
-                }else if (map[x][y]==flashlight) {  
-                    attron(COLOR_PAIR(7)); // set color
-                    mvprintw(y,x ,"%c" ,map[x][y]); // print cell
-                    attroff( COLOR_PAIR(7)); // unset color
-                }
-                else {
-
-                    attron(COLOR_PAIR(1)); // set color
-                    mvprintw(y,x ,"%c" ,map[x][y]); // print cell
-                    attroff( COLOR_PAIR(1)); // unset color                   
+                            attron(COLOR_PAIR(7)); 
+                            mvprintw(y, x, "%c", enemy_char); 
+                            attroff(COLOR_PAIR(7)); 
+                            enemy_present = true;
+                            break;
+                        }
+                    }
+                    if (!enemy_present) {
+                        attron(COLOR_PAIR(7)); 
+                        mvprintw(y, x, "%c", map[x][y]); 
+                        attroff(COLOR_PAIR(7));  
+                    }
+                } else {
+                    // Print other characters
+                    attron(COLOR_PAIR(1)); 
+                    mvprintw(y, x, "%c", map[x][y]); 
+                    attroff(COLOR_PAIR(1));                   
                 }
             } 
         }
     }
-    mvprintw(player.pos.y,player.pos.x,"%c",player_char);
+    mvprintw(player.pos.y, player.pos.x, "%c", player_char);
 }
+
+
+
+
 
 void free_map(int max_x, char **map) {
     // Libera memória alocada para o map

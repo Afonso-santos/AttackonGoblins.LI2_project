@@ -12,6 +12,7 @@
 #include "../include/obstaculos.h"
 #include "../include/estruturas.h"
 #include "../include/items.h"
+#include "../include/opponents.h"
 
 
 
