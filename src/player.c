@@ -54,7 +54,7 @@ player inicializa_player(player new_player){
 
 void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, int max_y, char **map){
     Position pos_thing;
-    while(1){
+    while(player.health>0){
         int direction = getch();
         switch (direction) {
             case 'w':  // Cima
