@@ -48,11 +48,9 @@ void abrir_jogo() {
 
   getch(); // Aguarda pressionar uma tecla para sair
 
- // endwin(); // Encerra o uso da biblioteca ncurses
   
   //free_map(max_x, map);       ISTO ESTÁ A DAR ERRO
   free(enemy_array);
-  game_over();
 }
 
 
@@ -211,11 +209,31 @@ void creditos() {
   }
 }
 
-// função que abre a tela de game over
-void game_over() {
+
+// função que abre a tela de you win
+void you_win(){
   clear();
   start_color();
-  init_pair(COR_TEXTO2, COLOR_RED, COLOR_BLACK);
+  init_pair(COR_TEXTO3, COLOR_GREEN, COLOR_BLACK);
+  attron(COLOR_PAIR(COR_TEXTO3));
+  attron(A_BOLD);       //para imprimir a frase a negrito
+  for (int k=0; k<LINES/2; k++) printw("\n");
+  for (int k=0; k<(COLS-8)/2; k++) printw(" ");
+  printw ("You win!\n");
+  for (int k=0; k<(COLS-8)/2; k++) printw(" ");
+  printw ("Congrats");
+  attroff(A_BOLD);
+  attroff(COLOR_PAIR(COR_TEXTO3));
+  refresh();
+  sleep(3);
+  flushinp();     //ignora todas as teclas pressionadas
+}
+
+
+// função que abre a tela de game over
+void game_over(){
+  clear();
+  start_color();
   attron(COLOR_PAIR(COR_TEXTO2));
   attron(A_BOLD);       //para imprimir a frase a negrito
   for (int k=0; k<LINES/2; k++) printw("\n");
@@ -225,7 +243,7 @@ void game_over() {
   attroff(COLOR_PAIR(COR_TEXTO2));
   refresh();
   sleep(3);
-  create_menu();
+  flushinp();       //ignora todas as teclas pressionadas
 }
 
 

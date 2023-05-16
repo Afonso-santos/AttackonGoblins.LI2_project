@@ -13,6 +13,8 @@
 
 Enemy* creat_enemies(int*number_enemies, int max_x, int max_y, char **map);
 
+int enemy_active(Enemy *Enemy_array, int num_enemies);
+
 void move_enemy(player player, Enemy enemy[], int num_enemies, char **map) ;
 
 

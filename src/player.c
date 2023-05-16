@@ -14,6 +14,7 @@
 #include "../include/estruturas.h"
 #include "../include/items.h"
 #include "../include/opponents.h"
+#include "../include/menu.h"
 
 
 int check(int x, int y,int max_x,int max_y, char **map) {
@@ -51,10 +52,18 @@ player inicializa_player(player new_player){
     return new_player;
 }
 
+int enemy_active (Enemy *Enemy_array, int num_enemies){
+    for (int i = 0; i < num_enemies; i++){
+        if (Enemy_array[i].active==1) return 1;
+    }
+    return 0;
+}
+
 
 void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, int max_y, char **map){
     Position pos_thing;
-    while(player.health>0){
+    int inimigos_ativos = 1;
+    while(player.health>0 && inimigos_ativos==1){
         int direction = getch();
         switch (direction) {
             case 'w':  // Cima
@@ -185,7 +194,10 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
         print_map(player,Enemy_array,num_enemies,max_x,max_y,map);
         move_enemy(player, Enemy_array, num_enemies, map);
         print_map(player,Enemy_array,num_enemies,max_x,max_y,map);
+        inimigos_ativos = enemy_active(Enemy_array, num_enemies);
     }
+    if (player.health<=0) game_over();
+    else you_win();
 }
 
 player create_coordinates(int max_x,int max_y, char **map) {

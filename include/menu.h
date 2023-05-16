@@ -28,6 +28,8 @@ void ajuda();
 
 void creditos();
 
+void you_win();
+
 void game_over();
 
 void sair();
