@@ -214,8 +214,8 @@ void creditos() {
 void you_win(){
   clear();
   start_color();
-  init_pair(COR_TEXTO3, COLOR_GREEN, COLOR_BLACK);
-  attron(COLOR_PAIR(COR_TEXTO3));
+  init_pair(COR_TEXTO4, COLOR_GREEN, COLOR_BLACK);
+  attron(COLOR_PAIR(COR_TEXTO4));
   attron(A_BOLD);       //para imprimir a frase a negrito
   for (int k=0; k<LINES/2; k++) printw("\n");
   for (int k=0; k<(COLS-8)/2; k++) printw(" ");
@@ -234,13 +234,13 @@ void you_win(){
 void game_over(){
   clear();
   start_color();
-  attron(COLOR_PAIR(COR_TEXTO2));
+  attron(COLOR_PAIR(COR_TEXTO4));
   attron(A_BOLD);       //para imprimir a frase a negrito
   for (int k=0; k<LINES/2; k++) printw("\n");
   for (int k=0; k<(COLS-9)/2; k++) printw(" ");
   printw ("Game Over");
   attroff(A_BOLD);
-  attroff(COLOR_PAIR(COR_TEXTO2));
+  attroff(COLOR_PAIR(COR_TEXTO4));
   refresh();
   sleep(3);
   flushinp();       //ignora todas as teclas pressionadas
