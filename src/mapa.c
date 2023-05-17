@@ -69,6 +69,27 @@ void create_map(int max_x,int max_y, char **map){
     }
 }
 
+void player_health(player player, int max_x, int max_y) {
+    init_pair(COR_TEXTO3, COLOR_GREEN, COLOR_BLACK);
+    init_pair(COR_TEXTO2, COLOR_RED, COLOR_BLACK);
+    int quadrados_verdes = player.health / 5;
+    int quadrados_vermelhos = 20 - quadrados_verdes;
+
+    mvprintw(HEIGHT/2, LENGTH+1, "Player Health:");
+
+    for (int i = 0; i < quadrados_verdes; i++) {
+        attron(COLOR_PAIR(COR_TEXTO3));
+        printw("ø");
+        attroff(COLOR_PAIR(COR_TEXTO3));
+    }
+
+    for (int i = 0; i < quadrados_vermelhos; i++) {
+        attron(COLOR_PAIR(COR_TEXTO2));
+        printw("ø");
+        attroff(COLOR_PAIR(COR_TEXTO2));
+    }
+}
+
 void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, char **map){   
 
     clear();
@@ -132,31 +153,31 @@ void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, 
     }
     start_color();
     init_pair(COR_TEXTO2, COLOR_RED, COLOR_BLACK);
-    mvprintw(HEIGHT/2, LENGTH+5, "Player Health:");
+    
+    player_health(player, max_x, max_y);
+    
+    mvprintw((HEIGHT/2)+2, LENGTH+1, "Current weapon:");
     attron(COLOR_PAIR(COR_TEXTO2));
-    mvprintw(HEIGHT/2, LENGTH+20, "%d", player.health);
+    mvprintw((HEIGHT/2)+2, LENGTH+17, "%s", player.inventory.armas.name);
     attroff(COLOR_PAIR(COR_TEXTO2));
-    mvprintw((HEIGHT/2)+2, LENGTH+5, "Current weapon:");
-    attron(COLOR_PAIR(COR_TEXTO2));
-    mvprintw((HEIGHT/2)+2, LENGTH+21, "%s", player.inventory.armas.name);
-    attroff(COLOR_PAIR(COR_TEXTO2));
-
     if (player.inventory.flashlight.collected == 1){
-        mvprintw((HEIGHT/2)+4, LENGTH+5, "Flashlight collected:");
+        mvprintw((HEIGHT/2)+4, LENGTH+1, "Flashlight collected:");
         attron(COLOR_PAIR(COR_TEXTO2));
-        mvprintw((HEIGHT/2)+4, LENGTH+27, "YES");
+        mvprintw((HEIGHT/2)+4, LENGTH+23, "YES");
         attroff(COLOR_PAIR(COR_TEXTO2));
     }
     else{
-        mvprintw((HEIGHT/2)+4, LENGTH+5, "Flashlight collected:");
+        mvprintw((HEIGHT/2)+4, LENGTH+1, "Flashlight collected:");
         attron(COLOR_PAIR(COR_TEXTO2));
-        mvprintw((HEIGHT/2)+4, LENGTH+27, "NO");
+        mvprintw((HEIGHT/2)+4, LENGTH+23, "NO");
         attroff(COLOR_PAIR(COR_TEXTO2));
     }
-    
     mvprintw(player.pos.y, player.pos.x, "%c", player_char);
+    mvprintw((HEIGHT/2)+6, LENGTH+1, "Mobs alive:");
+    attron(COLOR_PAIR(COR_TEXTO2));
+    mvprintw((HEIGHT/2)+6, LENGTH+13, "%d", number_enemy_active(enemy, num_enemies));
+    attroff(COLOR_PAIR(COR_TEXTO2));
 }
-
 
 
 void free_map(int max_x, char **map) {

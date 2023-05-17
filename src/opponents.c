@@ -102,3 +102,11 @@ Enemy* creat_enemies(int*number_enemies, int max_x, int max_y, char **map) {
     *number_enemies = num_enemies;
     return enemy_array;
 }
+
+int number_enemy_active (Enemy *Enemy_array, int num_enemies){
+    int alive = 0;
+    for (int i = 0; i < num_enemies; i++){
+        if (Enemy_array[i].active==1) alive++;
+    }
+    return alive;
+}
