@@ -225,9 +225,7 @@ void you_win(){
   mvprintw(18,(COLS-140),"   \\   /| |  | | |  | |          \\ \\/  \\/ /   | | | . ` |      | |  ");
   mvprintw(19,(COLS-140),"    | | | |__| | |__| |           \\  /\\  /   _| |_| |\\  |      |_|  ");
   mvprintw(20,(COLS-140),"    |_|  \\____/ \\____/             \\/  \\/   |_____|_| \\_|      (_)  ");
-  //printw ("You win!\n");
-  for (int k=0; k<(COLS-8)/2; k++) printw(" ");
-  printw ("Congrats");
+  
   attroff(A_BOLD);
   attroff(COLOR_PAIR(COR_TEXTO3));
   refresh();
