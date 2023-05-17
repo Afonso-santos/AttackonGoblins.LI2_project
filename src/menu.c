@@ -217,10 +217,15 @@ void you_win(){
   start_color();
   init_pair(COR_TEXTO4, COLOR_GREEN, COLOR_BLACK);
   attron(COLOR_PAIR(COR_TEXTO4));
-  attron(A_BOLD);       //para imprimir a frase a negrito
-  for (int k=0; k<LINES/2; k++) printw("\n");
-  for (int k=0; k<(COLS-8)/2; k++) printw(" ");
-  printw ("You win!\n");
+  attron(A_BOLD); 
+        //para imprimir a frase a negrito
+  mvprintw(15,(COLS-140)," __     ______  _    _         __          _______ _   _        _   ");
+  mvprintw(16,(COLS-140)," \\ \\   / / __ \\| |  | |        \\ \\        / /_   _| \\ | |      | |   ");
+  mvprintw(17,(COLS-140),"  \\ \\_/ / |  | | |  | |         \\ \\  /\\  / /  | | |  \\| |      | |  ");
+  mvprintw(18,(COLS-140),"   \\   /| |  | | |  | |          \\ \\/  \\/ /   | | | . ` |      | |  ");
+  mvprintw(19,(COLS-140),"    | | | |__| | |__| |           \\  /\\  /   _| |_| |\\  |      |_|  ");
+  mvprintw(20,(COLS-140),"    |_|  \\____/ \\____/             \\/  \\/   |_____|_| \\_|      (_)  ");
+  //printw ("You win!\n");
   for (int k=0; k<(COLS-8)/2; k++) printw(" ");
   printw ("Congrats");
   attroff(A_BOLD);
@@ -237,9 +242,13 @@ void game_over(){
   start_color();
   attron(COLOR_PAIR(COR_TEXTO4));
   attron(A_BOLD);       //para imprimir a frase a negrito
-  for (int k=0; k<LINES/2; k++) printw("\n");
-  for (int k=0; k<(COLS-9)/2; k++) printw(" ");
-  printw ("Game Over");
+  mvprintw(15,(COLS-145),"   _____          __  __ ______     ______      ________ _____      _  ");
+  mvprintw(16,(COLS-145),"  / ____|   /\\   |  \\/  |  ____|   / __ \\ \\    / /  ____|  __ \\    | | ");
+  mvprintw(17,(COLS-145)," | |  __   /  \\  | \\  / | |__     | |  | \\ \\  / /| |__  | |__) |   | | ");
+  mvprintw(18,(COLS-145)," | | |_ | / /\\ \\ | |\\/| |  __|    | |  | |\\ \\/ / |  __| |  _  /    | | ");
+  mvprintw(19,(COLS-145)," | |__| |/ ____ \\| |  | | |____   | |__| | \\  /  | |____| | \\ \\    |_| ");
+  mvprintw(20,(COLS-145),"  \\_____/_/    \\_\\_|  |_|______|   \\____/   \\/   |______|_|  \\_\\   (_)  ");
+  
   attroff(A_BOLD);
   attroff(COLOR_PAIR(COR_TEXTO4));
   refresh();
