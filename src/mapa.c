@@ -160,7 +160,11 @@ void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, 
     
     mvprintw((HEIGHT/2)+2, LENGTH+1, "Current weapon:");
     attron(COLOR_PAIR(COR_TEXTO4));
+
     mvprintw((HEIGHT/2)+2, LENGTH+17, "%s", player.inventory.armas.name);
+
+    
+
     attroff(COLOR_PAIR(COR_TEXTO4));
     if (player.inventory.flashlight.collected == 1){
         mvprintw((HEIGHT/2)+4, LENGTH+1, "Flashlight collected:");
@@ -169,6 +173,7 @@ void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, 
         attroff(COLOR_PAIR(COR_TEXTO4));
     }
     else{
+        
         mvprintw((HEIGHT/2)+4, LENGTH+1, "Flashlight collected:");
         attron(COLOR_PAIR(COR_TEXTO4));
         mvprintw((HEIGHT/2)+4, LENGTH+23, "NO");

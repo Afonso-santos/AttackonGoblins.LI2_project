@@ -218,8 +218,7 @@ void you_win(){
   init_pair(COR_TEXTO4, COLOR_GREEN, COLOR_BLACK);
   attron(COLOR_PAIR(COR_TEXTO4));
   attron(A_BOLD);       //para imprimir a frase a negrito
-  for (int k=0; k<LINES/2; k++) printw("\n");
-  for (int k=0; k<(COLS-8)/2; k++) printw(" ");
+  MV
   printw ("You win!\n");
   for (int k=0; k<(COLS-8)/2; k++) printw(" ");
   printw ("Congrats");
@@ -294,6 +293,34 @@ void create_menu(){
       }
       printw("\n");
     }
+
+    attron(COLOR_PAIR(COR_TEXTO2));  // Ativar a cor de fundo definida pelo par de cores especificado
+        mvprintw(10, (COLS-80)/2,"                               ____________                              ");
+        mvprintw(11, (COLS-80)/2,"                             .~      ,   . ~.                            ");
+        mvprintw(12, (COLS-80)/2,"                            /                \\                          ");
+        mvprintw(13, (COLS-80)/2,"                           /      /~\\/~\\   ,  \\                         ");
+        mvprintw(14, (COLS-80)/2,"                          |   .   \\    /   '   |                         ");
+        mvprintw(15, (COLS-80)/2,"                          |         \\/         |                         ");
+        mvprintw(16, (COLS-80)/2,"                 XX       |  /~~\\        /~~\\  |       XX                ");
+        mvprintw(17, (COLS-80)/2,"               XX  X      | |  o  \\    /  o  | |      X  XX              ");
+        mvprintw(18,(COLS-80)/2 ,"             XX     X     |  \\____/    \\____/  |     X     XX            ");
+        mvprintw(19, (COLS-80)/2,"        XXXXX     XX      \\         /\\        ,/      XX     XXXXX       ");
+        mvprintw(20,(COLS-80)/2, "       X        XXmm;@      \\      /  \\     ,/      @mm;XX        X      ");
+        mvprintw(21, (COLS-80)/2,"       X       X  @mm;;@     |           '  |     @mm;;@  X       X      ");
+        mvprintw(22, (COLS-80)/2,"       X      X     @mm;;@   |. ` ; ; ; ;  ,|   @mm;;@     X      X      ");
+        mvprintw(23, (COLS-80)/2,"        X    X        @mm;;@                  @mm;;@        X    X       ");
+        mvprintw(24,(COLS-80)/2 ,"         X   X          @mm;;@              @mm;;@          X   X        ");
+        mvprintw(25, (COLS-80)/2,"          X  X            @mm;;@          @mm;;@            X  X         ");
+        mvprintw(26,(COLS-80)/2, "           XX X             @mm;;@      @mm;;@             X XX          ");
+        mvprintw(27,(COLS-80)/2,"             XXX              @mm;;@  @mm;;@              XXX             ");
+        mvprintw(28,(COLS-80)/2,"                                @mm;;mm;;@                                ");
+        mvprintw(29,(COLS-80)/2,"                                 @mm;;@                                   ");
+        mvprintw(30,(COLS-80)/2,"                                @mm;;;mm@@                                ");
+        mvprintw(31,(COLS-80)/2,"                                 @@@  @@@                                 ");
+        attroff(COLOR_PAIR(COR_TEXTO2));
+
+
+
     refresh();
 
     // seleção do jogador
