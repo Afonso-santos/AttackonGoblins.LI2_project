@@ -95,3 +95,13 @@ int whats_around(player player, char **map) {
     }
     return 0;
 }
+
+// void remove_flashlight(int max_x,int max_y, char **map){
+    // for (int y=0; y<HEIGHT; y++){
+        // for (int x=0; x<LENGTH; x++){
+            // if (map[x][y] == flashlight) {
+                // map[x][y] = empty;
+            // }
+        // }
+    // }
+// }

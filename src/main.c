@@ -1,4 +1,4 @@
-#include <string.h>
+/*#include <string.h>
 #include <stdbool.h>
 #include <alloca.h>
 #include <curses.h>
@@ -21,6 +21,18 @@
 
 int main() {
     initscr(); // Inicializa a biblioteca ncurses
+
+    // int max_x, max_y;
+    // define(&max_x, &max_y);
+// 
+    // #define HEIGHT (max_y-7)
+    // #define LENGTH (max_x-58)           
+// 
+    // char **map = calloc(LENGTH, sizeof(char *));
+    // for (int i = 0; i < LENGTH; i++) {
+        // map[i] = calloc(HEIGHT, sizeof(char));
+    // }
+
     curs_set(0);
           
     start_color();
@@ -40,9 +52,16 @@ int main() {
     init_pair(COR_OPCAO, COLOR_BLACK, COLOR_RED);
     init_pair(COR_TEXTO2, COLOR_RED, COLOR_BLACK);
 
+    // create_map(max_x, max_y, map);
+    // create_edge(max_x, max_y, map);
+    // create_barrel(max_x, max_y, map);
+    // create_flashlight(max_x, max_y, map);
+    // creat_guns(max_x, max_y, map);
+
     while (1){
         create_menu();
     }
-   
+    // free_map(max_x, map);
+    // free(enemy_array);
     return 0;
 }

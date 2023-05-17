@@ -21,9 +21,9 @@
 #define obstacle '+'
 #define Flashlight 'F'
 #define enemy_char 'G'
-#define axe_char 'T'
-#define spear_char  '!'
-#define swoord_char '1'
+#define axe_char 'A'
+#define spear_char  'P'
+#define swoord_char 'S'
 #define Shapes 3
 // #define SIZE 5
 

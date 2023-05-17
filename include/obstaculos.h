@@ -12,11 +12,11 @@
 #include <time.h>
 #include "../include/estruturas.h"
 
-void create_Triangle( Position pos, int max_x, int max_y, char **map);
+void create_Triangle(Position pos, int max_x, int max_y, char **map);
 
 void create_Square(Position pos, int max_x, int max_y, char **map);
 
-void create_Circle( Position pos,int max_x, int max_y, char **map);
+void create_Circle(Position pos,int max_x, int max_y, char **map);
 
 void create_barrel(int max_x,int max_y, char **map);
 

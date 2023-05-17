@@ -16,6 +16,7 @@
 #include "../include/menu.h"
 
 
+
 void define(int *max_x, int *max_y) {
     initscr();
 
@@ -27,8 +28,8 @@ void define(int *max_x, int *max_y) {
 void create_edge(int max_x,int max_y, char **map){
     srand(time(0));
 
-    int num_obstacles = rand() % 11 + 37
-; 
+    int num_obstacles = rand() % 11 + 37; 
+
 
     for (int i = 0; i < num_obstacles; i++) {
         int shape = rand() % 3; // Gere um tipo de forma aleatório (0 a 2)
@@ -69,6 +70,7 @@ void create_map(int max_x,int max_y, char **map){
 }
 
 void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, char **map){   
+
     clear();
     
     for (int y = 0; y < HEIGHT; y++) {
@@ -138,6 +140,7 @@ void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, 
     attron(COLOR_PAIR(COR_TEXTO2));
     mvprintw((HEIGHT/2)+2, LENGTH+21, "%s", player.inventory.armas.name);
     attroff(COLOR_PAIR(COR_TEXTO2));
+
     if (player.inventory.flashlight.collected == 1){
         mvprintw((HEIGHT/2)+4, LENGTH+5, "Flashlight collected:");
         attron(COLOR_PAIR(COR_TEXTO2));
@@ -150,6 +153,7 @@ void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, 
         mvprintw((HEIGHT/2)+4, LENGTH+27, "NO");
         attroff(COLOR_PAIR(COR_TEXTO2));
     }
+    
     mvprintw(player.pos.y, player.pos.x, "%c", player_char);
 }
 

@@ -12,13 +12,13 @@
 #include <stdlib.h>
 #include <time.h>
 #include "../include/estruturas.h"
-// #pragma once
+//#pragma once
 
 #define SIZE 5
 
-// int max_x, max_y;
-// char **map;
-// int SIZE = 5;
+//int max_x, max_y;
+//char **map;
+//int SIZE = 5;
 
 
 void define (int *max_x,int *max_y);

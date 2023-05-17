@@ -12,7 +12,7 @@
 #include <time.h>
 #include "../include/estruturas.h"
 
-int check(int x, int y,int max_x,int max_y, char **map);
+int check(int x,int y,int max_x,int max_y, char **map);
 
 int check_player(int x, int y,int max_x,int max_y, char **map);
 

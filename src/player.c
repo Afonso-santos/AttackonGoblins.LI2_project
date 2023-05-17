@@ -66,71 +66,71 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
     while(player.health>0 && inimigos_ativos==1){
         int direction = getch();
         switch (direction) {
-            case 'w':  // Cima
+            case 'w':  // UP
                 if (map[player.pos.x][player.pos.y-1] == empty ) {
                     player.pos.y--;
                 }
                 break;
-            case '8':  // Cima
+            case '8':  // UP
                 if (map[player.pos.x][player.pos.y-1] == empty ) {
                     player.pos.y--;
                 }
                 break;  
-            case 's':  // Baixo
+            case 's':  // DOWN
                 if (map[player.pos.x][player.pos.y+1] == empty) {
                     player.pos.y++;
                 }
                 break;
-            case '2':  // Baixo
+            case '2':  // DOWN
                 if (map[player.pos.x][player.pos.y+1] == empty) {
                     player.pos.y++;
                 }
                 break;
-            case 'a':  // Esquerda
+            case 'a':  // LEFT
                 if (map[player.pos.x-1][player.pos.y] == empty) {
                     player.pos.x--;
                 }
                 break;
-            case '4':  // Esquerda
+            case '4':  // LEFT
                 if (map[player.pos.x-1][player.pos.y] == empty) {
                     player.pos.x--;
                 }
                 break;
-            case 'd':  // Direita
+            case 'd':  // RIGHT
                 if (map[player.pos.x+1][player.pos.y] == empty) {
                     player.pos.x++;
                 }
                 break;
-            case '6':  // Direita
+            case '6':  // RIGHT
                 if (map[player.pos.x+1][player.pos.y] == empty) {
                     player.pos.x++;
                 }
                 break;
-            case '7':  // Diagonal superior esquerda
+            case '7':  // UPPER LEFT
                 if (map[player.pos.x-1][player.pos.y-1] == empty) {
                     player.pos.x--;
                     player.pos.y--;
                 }
                 break;
-            case '9':  // Diagonal superior direita
+            case '9':  // UPPER RIGHT
                 if (map[player.pos.x+1][player.pos.y-1] == empty) {
                     player.pos.x++;
                     player.pos.y--;
                 }
                 break;
-            case '1':  // Diagonal inferior esquerda
+            case '1':  // DOWN LEFT
                 if (map[player.pos.x-1][player.pos.y+1] == empty) {
                     player.pos.x--;
                     player.pos.y++;
                 }
                 break;
-            case '3':  // Diagonal inferior direita
+            case '3':  // DOWN RIGHT
                 if (map[player.pos.x+1][player.pos.y+1] == empty) {
                     player.pos.x++;
                     player.pos.y++;
                 }
                 break;
-            case 'f':  // apanhar item
+            case 'f':  // CATCH ITEM
                 if (whats_around(player,map)==3) {
                     pos_thing=collected(player,map);
                     if (map[pos_thing.x][pos_thing.y]==Flashlight) {
@@ -149,7 +149,7 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                     remove_thing(pos_thing,map);
                 }
                 break;
-            case 'l':   //vê mapa todo  
+            case 'l':   //SEE MAP  
                 if (player.inventory.flashlight.radius==7 || player.inventory.flashlight.radius==4){
                     player.inventory.flashlight.radius=1000;
                 }
@@ -159,7 +159,7 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                     player.inventory.flashlight.radius=4;
                 }
                 break;
-            case 32:   //atacar   (o 32 é o código ASCII da tecla "space")
+            case 32:   //ATTACK   (o 32 é o código ASCII da tecla "space")
                 if (whats_around(player, map) == 1) {
                     pos_thing = collected(player, map);
                     if (map[pos_thing.x][pos_thing.y] == enemy_char) {
