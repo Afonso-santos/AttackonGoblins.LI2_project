@@ -144,6 +144,13 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                     else if (map[pos_thing.x][pos_thing.y]==spear_char){
                         strcpy(player.inventory.armas.name, "SPEAR");;
                         player.inventory.armas.collected=1;
+
+                    }else if (map[pos_thing.x][pos_thing.y]==medicKit){
+                        
+                        player.health+=50;
+                        if(player.health>=100){
+                            player.health=100;
+                        }
                     }
 
                     remove_thing(pos_thing,map);
@@ -162,6 +169,7 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
             case 32:   //ATTACK   (o 32 é o código ASCII da tecla "space")
                 if (whats_around(player, map) == 1) {
                     pos_thing = collected(player, map);
+                    
                     if (map[pos_thing.x][pos_thing.y] == enemy_char) {
                         for (int i = 0; i < num_enemies; i++) {
                             if (Enemy_array[i].pos.x == pos_thing.x && Enemy_array[i].pos.y == pos_thing.y && Enemy_array[i].health==50) {

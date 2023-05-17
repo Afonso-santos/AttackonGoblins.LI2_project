@@ -59,7 +59,7 @@ Position collected(player player, char **map) {
     for (int i = player.pos.x - 1; i <= player.pos.x + 1; i++) {
         for (int j = player.pos.y - 1; j <= player.pos.y + 1; j++) {
             if (i!=player.pos.x || j!=player.pos.y){
-                if (map[i][j] == Flashlight || map[i][j] == axe_char || map[i][j] == spear_char || map[i][j] == enemy_char) {
+                if (map[i][j] == Flashlight || map[i][j] == axe_char || map[i][j] == spear_char || map[i][j] == enemy_char||map[i][j]==medicKit) {
                     pos_thing.x = i;
                     pos_thing.y = j;
                     return pos_thing;
@@ -73,7 +73,7 @@ Position collected(player player, char **map) {
 
 
 void remove_thing (Position pos, char **map){
-    if(map[pos.x][pos.y]==Flashlight || map[pos.x][pos.y]==axe_char || map[pos.x][pos.y]==spear_char || map[pos.x][pos.y]==swoord_char || map[pos.x][pos.y]==enemy_char){
+    if(map[pos.x][pos.y]==Flashlight || map[pos.x][pos.y]==axe_char || map[pos.x][pos.y]==spear_char || map[pos.x][pos.y]==swoord_char || map[pos.x][pos.y]==enemy_char || map[pos.x][pos.y]==medicKit){
         map[pos.x][pos.y]=empty;
     }
 }
@@ -87,7 +87,7 @@ int whats_around(player player, char **map) {
                     return 1;
                 } else if (map[i][j] == player_char) {
                     return 2;
-                } else if (map[i][j] == axe_char || map[i][j] == spear_char || map[i][j] == Flashlight) {
+                } else if (map[i][j] == axe_char || map[i][j] == spear_char || map[i][j] == Flashlight || map[i][j]==medicKit) {
                     return 3;
                 }
             }
@@ -96,12 +96,17 @@ int whats_around(player player, char **map) {
     return 0;
 }
 
-// void remove_flashlight(int max_x,int max_y, char **map){
-    // for (int y=0; y<HEIGHT; y++){
-        // for (int x=0; x<LENGTH; x++){
-            // if (map[x][y] == flashlight) {
-                // map[x][y] = empty;
-            // }
-        // }
-    // }
-// }
+void creat_medicKit(int max_x,int max_y, char **map)
+{
+        srand(time(0));
+    Position pos;
+    pos.x=-2;
+    pos.y=-2;
+
+    while (check_player(pos.x,pos.y,max_x,max_y,map) != 1){
+        pos.x = (rand() % (LENGTH - 2));
+        pos.y = (rand() % (HEIGHT - 2));
+    }
+    map[pos.x][pos.y] = medicKit;
+
+}

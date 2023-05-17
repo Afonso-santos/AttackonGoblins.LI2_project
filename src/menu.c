@@ -36,6 +36,7 @@ void abrir_jogo() {
   create_barrel(max_x, max_y, map);
   create_flashlight(max_x, max_y, map);
   creat_guns(max_x, max_y, map);
+  creat_medicKit(max_x,max_y,map);
 
   player new_player = create_coordinates(max_x, max_y, map);
   new_player =inicializa_player(new_player);
@@ -332,4 +333,29 @@ void create_menu(){
         break;
     }
   }
+}
+
+void player_health(player player, int max_x, int max_y) {
+  init_pair(COR_TEXTO3, COLOR_GREEN, COLOR_GREEN);
+  init_pair(COR_TEXTO2, COLOR_RED, COLOR_RED);
+  init_pair(COR_TEXTO4,COLOR_RED,COLOR_BLACK);
+  int quadrados_verdes = player.health / 5;
+  int quadrados_vermelhos = 20 - quadrados_verdes;
+
+  mvprintw(HEIGHT/2, LENGTH+1, "Player Health:");
+
+  for (int i = 0; i < quadrados_verdes; i++) {
+      attron(COLOR_PAIR(COR_TEXTO3));
+      printw("#");
+      attroff(COLOR_PAIR(COR_TEXTO3));
+  }
+
+  for (int i = 0; i < quadrados_vermelhos; i++) {
+      attron(COLOR_PAIR(COR_TEXTO2));
+      printw("#");
+      attroff(COLOR_PAIR(COR_TEXTO2));
+  }
+  attron(COLOR_PAIR(COR_TEXTO4));
+  printw("  %d%",player.health);
+  attroff(COLOR_PAIR(COR_TEXTO4));
 }

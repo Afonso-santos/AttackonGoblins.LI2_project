@@ -35,3 +35,5 @@ void game_over();
 void sair();
 
 void create_menu();
+
+void player_health(player player, int max_x, int max_y);

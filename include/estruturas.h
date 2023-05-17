@@ -22,8 +22,9 @@
 #define Flashlight 'F'
 #define enemy_char 'G'
 #define axe_char 'A'
-#define spear_char  'P'
+#define spear_char  'S'
 #define swoord_char 'S'
+#define medicKit 'K'
 #define Shapes 3
 // #define SIZE 5
 
