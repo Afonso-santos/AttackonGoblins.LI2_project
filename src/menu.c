@@ -270,32 +270,15 @@ void create_menu(){
   // loop do menu
   while (1) {
     clear();
-    for (int j = 0; j < 5; j++) {
         attron(COLOR_PAIR(COR_TEXTO2));  // Ativar a cor de fundo definida pelo par de cores especificado
-        if (j == 2) {
-            for (int k=0; k<(COLS-77)/2; k++) printw(" ");
-            printw(" _____      _____     _____            _____          _______  _______  _____\n");
-            for (int k=0; k<(COLS-77)/2; k++) printw(" ");
-            printw("|     |    /     \\   /     \\ |      | |       |          |        |    |\n");
-            for (int k=0; k<(COLS-77)/2; k++) printw(" ");
-            printw("|     |   |       | |        |      | |       |          |        |    |\n");
-            for (int k=0; k<(COLS-77)/2; k++) printw(" ");
-            printw("|_____|   |       | |   ___  |      | |_____  |          |        |    |_____\n");
-            for (int k=0; k<(COLS-77)/2; k++) printw(" ");
-            printw("|     \\   |       | |  |_  | |      | |       |          |        |    |\n");
-            for (int k=0; k<(COLS-77)/2; k++) printw(" ");
-            printw("|      \\  |       | |      | |      | |       |          |        |    |\n");
-            for (int k=0; k<(COLS-77)/2; k++) printw(" ");
-            printw("|       \\  \\_____/   \\_____| |______| |_____  |_____  ___|___     |    |_____\n");
+            mvprintw(2, (COLS-111)/2,"       _______ _______       _____ _  __      ____  _   _       _____  ____  ____  _      _____ _   _  _____   ");
+            mvprintw(3, (COLS-111)/2,"    /\\|__   __|__   __|/\\   / ____| |/ /     / __ \\| \\ | |     / ____|/ __ \\|  _ \\| |    |_   _| \\ | |/ ____|  ");
+            mvprintw(4, (COLS-111)/2,"   /  \\  | |     | |  /  \\ | |    | ' /     | |  | |  \\| |    | |  __| |  | | |_) | |      | | |  \\| | (___    ");
+            mvprintw(5, (COLS-111)/2,"  / /\\ \\ | |     | | / /\\ \\| |    |  <      | |  | | . ` |    | | |_ | |  | |  _ <| |      | | | . ` |\\___ \\   ");
+            mvprintw(6, (COLS-111)/2," / ____ \\| |     | |/ ____ \\ |____| . \\     | |__| | |\\  |    | |__| | |__| | |_) | |____ _| |_| |\\  |____) |  ");
+            mvprintw(7, (COLS-111)/2,"/_/    \\_\\_|     |_/_/    \\_\\_____|_|\\_\\     \\____/|_| \\_|     \\_____|\\____/|____/|______|_____|_| \\_|_____/   ");
             attroff(COLOR_PAIR(COR_TEXTO2));
-        }
-        else {
-            for (int i = 0; i < COLS; i++) {
-                printw(" ");
-            }
-        }
-    }
-    printw("\n\n");
+    printw("\n\n\n");
 
 
     // imprime as opções do menu
