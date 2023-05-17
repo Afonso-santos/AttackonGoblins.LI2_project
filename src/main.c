@@ -1,4 +1,4 @@
-/*#include <string.h>
+#include <string.h>
 #include <stdbool.h>
 #include <alloca.h>
 #include <curses.h>
