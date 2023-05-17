@@ -218,7 +218,8 @@ void you_win(){
   init_pair(COR_TEXTO4, COLOR_GREEN, COLOR_BLACK);
   attron(COLOR_PAIR(COR_TEXTO4));
   attron(A_BOLD);       //para imprimir a frase a negrito
-  MV
+  for (int k=0; k<LINES/2; k++) printw("\n");
+  for (int k=0; k<(COLS-8)/2; k++) printw(" ");
   printw ("You win!\n");
   for (int k=0; k<(COLS-8)/2; k++) printw(" ");
   printw ("Congrats");
