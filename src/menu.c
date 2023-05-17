@@ -356,6 +356,7 @@ void player_health(player player, int max_x, int max_y) {
       attroff(COLOR_PAIR(COR_TEXTO2));
   }
   attron(COLOR_PAIR(COR_TEXTO4));
-  printw("  %d%",player.health);
+  printw("  %d HP",player.health);
+
   attroff(COLOR_PAIR(COR_TEXTO4));
 }
