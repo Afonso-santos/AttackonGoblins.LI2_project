@@ -15,7 +15,8 @@
 #define COR_TEXTO2 11     //letras vermelhas
 #define COR_TEXTO3 12    //letras verdes
 #define COR_TEXTO4 13    //letras amarelas
-
+#define COR_TEXTO5 14
+#define COR_TEXTO6 15
 
 typedef struct {
   char* titulo;
