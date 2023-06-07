@@ -35,7 +35,7 @@ void abrir_jogo() {
   create_edge(max_x, max_y, map);
   create_barrel(max_x, max_y, map);
   create_flashlight(max_x, max_y, map);
-  creat_guns(max_x, max_y, map);
+  creat_weapon(max_x, max_y, map);
   creat_medicKit(max_x,max_y,map);
 
   player new_player = create_coordinates(max_x, max_y, map);
@@ -152,7 +152,7 @@ void ajuda() {
       attron(COLOR_PAIR(COR_TEXTO));
       printw("         space");
       attroff(COLOR_PAIR(COR_TEXTO));
-      printw("->atack");
+      printw("->attack");
       attron(COLOR_PAIR(COR_TEXTO));
       printw("                     q");
       attroff(COLOR_PAIR(COR_TEXTO));

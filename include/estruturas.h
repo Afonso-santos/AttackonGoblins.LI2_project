@@ -20,10 +20,11 @@
 #define empty '.'
 #define obstacle '+'
 #define Flashlight 'F'
-#define enemy_char 'G'
+#define enemy_char 'E'
 #define axe_char 'A'
-#define spear_char  'S'
+#define spear_char  'P'
 #define swoord_char 'S'
+#define gun_char 'G'
 #define medicKit 'K'
 #define Shapes 3
 // #define SIZE 5
@@ -55,12 +56,12 @@ typedef struct inventory{
 typedef struct Player{
     Position pos ;
     inventory inventory;
-    int health;    
+    unsigned int health;    
 }player;
 
 typedef struct Enemy{
     Position pos;
-    int health;
+    unsigned int health;
     int attack;
     int active;
 }Enemy;

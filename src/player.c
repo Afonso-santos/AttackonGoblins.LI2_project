@@ -45,7 +45,7 @@ player inicializa_player(player new_player){
     new_player.health=100;
     
     new_player.inventory.flashlight.collected=0;
-    new_player.inventory.flashlight.radius=4;
+    new_player.inventory.flashlight.radius=6;
     new_player.inventory.armas.collected=0;
     strcpy(new_player.inventory.armas.name, "SWORD");
 
@@ -138,14 +138,20 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                         player.inventory.flashlight.radius=7;
                     }
                     else if (map[pos_thing.x][pos_thing.y]==axe_char){
-                        strcpy(player.inventory.armas.name, "AXE");;
+                        strcpy(player.inventory.armas.name, "AXE");
                         player.inventory.armas.collected=1;
                     }
                     else if (map[pos_thing.x][pos_thing.y]==spear_char){
-                        strcpy(player.inventory.armas.name, "SPEAR");;
+                        strcpy(player.inventory.armas.name, "SPEAR");
                         player.inventory.armas.collected=1;
 
-                    }else if (map[pos_thing.x][pos_thing.y]==medicKit){
+                    }
+                     else if (map[pos_thing.x][pos_thing.y]==gun_char){
+                        strcpy(player.inventory.armas.name, "GUN");
+                        player.inventory.armas.collected=1;
+
+                    }
+                    else if (map[pos_thing.x][pos_thing.y]==medicKit){
                         
                         player.health+=50;
                         if(player.health>=100){
@@ -169,32 +175,45 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
             case 32:   //ATTACK   (o 32 é o código ASCII da tecla "space")
                 if (whats_around(player, map) == 1) {
                     pos_thing = collected(player, map);
-                    
+
                     if (map[pos_thing.x][pos_thing.y] == enemy_char) {
                         for (int i = 0; i < num_enemies; i++) {
-                            if (Enemy_array[i].pos.x == pos_thing.x && Enemy_array[i].pos.y == pos_thing.y && Enemy_array[i].health==50) {
+                            if (Enemy_array[i].pos.x == pos_thing.x && Enemy_array[i].pos.y == pos_thing.y && player.inventory.armas.collected==1){  //se tiver uma arma ele mata com um hit
+                                if (strcmp("AXE", player.inventory.armas.name) == 0){
                                 Enemy_array[i].health = 0;
                                 Enemy_array[i].active = 0; // Definir o inimigo como inativo
                                 remove_thing(pos_thing, map);
                                 break;
-                            }
-                            else if (Enemy_array[i].pos.x == pos_thing.x && Enemy_array[i].pos.y == pos_thing.y && Enemy_array[i].health==100 && player.inventory.armas.collected==1){  //se tiver uma arma ele mata com um hit
-                                Enemy_array[i].health = 0;
-                                Enemy_array[i].active = 0; // Definir o inimigo como inativo
+                                }
+                                else if (strcmp("SPEAR", player.inventory.armas.name) == 0 && Enemy_array[i].health > 0){
+                                Enemy_array[i].health = Enemy_array[i].health - 50;
+                                }
+                                else if (strcmp("GUN", player.inventory.armas.name) == 0 && Enemy_array[i].health > 0){
+                                Enemy_array[i].health = Enemy_array[i].health - 20;
+                                }
+                                if (Enemy_array[i].health <= 0){
+                                Enemy_array[i].active = 0; 
                                 remove_thing(pos_thing, map);
-                                break;
+                                break; 
+                                }
                             }
-                            else if (Enemy_array[i].pos.x == pos_thing.x && Enemy_array[i].pos.y == pos_thing.y && Enemy_array[i].health==100 && player.inventory.armas.collected==0){   //se não tiver arma mata com dois hits
-                                Enemy_array[i].health = 50;
+                            else if (Enemy_array[i].pos.x == pos_thing.x && Enemy_array[i].pos.y == pos_thing.y && player.inventory.armas.collected==0){   //se não tiver arma mata com dois hits
+                                Enemy_array[i].health = Enemy_array[i].health - 50;
+                                    if (Enemy_array[i].health == 0){
+                                    Enemy_array[i].active = 0; 
+                                    remove_thing(pos_thing, map);
+                                    break; 
+                                }
                             }
                         }
                     }
-                }   
-                break;
+                }
+                break;  
             case 'q':
                 endwin();
                 exit(0);
                 break;
+
         }
         if (whats_around(player, map) == 1 && direction!=32) {       //o mob só ataca caso o jogador não o ataque
             player.health = player.health - Enemy_array[2].attack;

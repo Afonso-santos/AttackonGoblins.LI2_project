@@ -69,27 +69,7 @@ void create_map(int max_x,int max_y, char **map){
     }
 }
 
-// void player_health(player player, int max_x, int max_y) {
-//     init_pair(COR_TEXTO3, COLOR_GREEN, COLOR_GREEN);
-//     init_pair(COR_TEXTO2, COLOR_RED, COLOR_RED);
-//     init_pair(COR_TEXTO4,COLOR_RED,COLOR_BLACK);
-//     int quadrados_verdes = player.health / 5;
-//     int quadrados_vermelhos = 20 - quadrados_verdes;
 
-//     mvprintw(HEIGHT/2, LENGTH+1, "Player Health:");
-
-//     for (int i = 0; i < quadrados_verdes; i++) {
-//         attron(COLOR_PAIR(COR_TEXTO3));
-//         printw("#");
-//         attroff(COLOR_PAIR(COR_TEXTO3));
-//     }
-
-//     for (int i = 0; i < quadrados_vermelhos; i++) {
-//         attron(COLOR_PAIR(COR_TEXTO2));
-//         printw("#");
-//         attroff(COLOR_PAIR(COR_TEXTO2));
-//     }
-// }
 
 
 void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, char **map){   
@@ -120,14 +100,13 @@ void print_map(player player,Enemy *enemy, int num_enemies,int max_x,int max_y, 
                     mvprintw(y, x, "%c", map[x][y]); 
                     attroff(COLOR_PAIR(6)); 
 
-                } else if (map[x][y] == Flashlight || map[x][y] == axe_char || map[x][y] == spear_char || map[x][y] == swoord_char || map[x][y]==medicKit) {
+                } else if (map[x][y]==Flashlight || map[x][y]==axe_char || map[x][y]==spear_char || map[x][y]==swoord_char || map[x][y]==medicKit || map[x][y]==gun_char) {
                     // Print flashlight
                     attron(COLOR_PAIR(9)); 
                     mvprintw(y, x, "%c", map[x][y]); 
                     attroff(COLOR_PAIR(9)); 
                 
                 } else if (map[x][y] == enemy_char) {
-                    // Print enemy
                     bool enemy_present = false;
                     for (int i = 0; i < num_enemies; i++) {
                         if (enemy[i].health && enemy[i].pos.x == x && enemy[i].pos.y == y) {
