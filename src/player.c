@@ -45,7 +45,7 @@ player inicializa_player(player new_player){
     new_player.health=100;
     
     new_player.inventory.flashlight.collected=0;
-    new_player.inventory.flashlight.radius=6;
+    new_player.inventory.flashlight.radius=7;
     new_player.inventory.armas.collected=0;
     strcpy(new_player.inventory.armas.name, "SWORD");
 
@@ -135,7 +135,7 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                     pos_thing=collected(player,map);
                     if (map[pos_thing.x][pos_thing.y]==Flashlight) {
                         player.inventory.flashlight.collected=1;
-                        player.inventory.flashlight.radius=7;
+                        player.inventory.flashlight.radius=10;
                     }
                     else if (map[pos_thing.x][pos_thing.y]==axe_char){
                         strcpy(player.inventory.armas.name, "AXE");
@@ -163,13 +163,13 @@ void move_player(player player, Enemy *Enemy_array, int num_enemies, int max_x, 
                 }
                 break;
             case 'l':   //SEE MAP  
-                if (player.inventory.flashlight.radius==7 || player.inventory.flashlight.radius==4){
+                if (player.inventory.flashlight.radius==7 || player.inventory.flashlight.radius==10){
                     player.inventory.flashlight.radius=1000;
                 }
                 else if (player.inventory.flashlight.collected==1){
-                    player.inventory.flashlight.radius=7;
+                    player.inventory.flashlight.radius=10;
                 }else{
-                    player.inventory.flashlight.radius=4;
+                    player.inventory.flashlight.radius=7;
                 }
                 break;
             case 32:   //ATTACK   (o 32 é o código ASCII da tecla "space")
