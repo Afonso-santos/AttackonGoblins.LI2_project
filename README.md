@@ -37,4 +37,5 @@ $ ./jogo
 ## Group 
 
 - **A104276** Afonso Dionísio Santos;
-
+- **A104346** Gonçalo Oliveira Cruz;
+- **A100824** Gonçalo Costa;
