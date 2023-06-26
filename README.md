@@ -1,6 +1,6 @@
 # Attack on Goblins
 ## Software Labs II | Laboratórios de Informática II 
-## Grade:  /20 
+## Grade:  18/20    🌟 
 
 This game was developed during the second semester of the Software Engineering degree @ University of Minho.
 The project consisted of recreating a RogueLIte, with the freedom to add features and the graphical component was made with ncursed.
